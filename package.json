@@ -1,0 +1,20 @@
+{
+  "name": "ag-grid-packages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ag-grid-charts-enterprise": "^31.1.1",
+    "ag-grid-community": "^31.1.1",
+    "yarn": "^1.22.22"
+  },
+  "devDependencies": {
+    "prettier": "3.2.5"
+  }
+}
