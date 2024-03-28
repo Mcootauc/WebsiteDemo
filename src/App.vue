@@ -10,28 +10,34 @@
                     <th scope="col" class="px-6 py-3">ID #</th>
                     <th scope="col" class="px-6 py-3">Category</th>
                     <th scope="col" class="px-6 py-3">Status</th>
+                    <th scope="col" class="px-6 py-3">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in dataTable" :key="item.id" class="border-b">
-                    <td class="px-6 py-4">{{ item.id }}</td>
-                    <td class="px-6 py-4">{{ item.workName }}</td>
-                    <td class="px-6 py-4">
-                        {{ item.status ? "Active" : "Inactive" }}
-                    </td>
-                    <td class="px-6 py-4">
-                        <button
-                            @click="item.showDetails = !item.showDetails"
-                            class="text-blue-600 hover:underline"
-                        >
-                            View Details
-                        </button>
-                        <div v-if="item.showDetails">
-                            <!-- Additional details here -->
+                <template v-for="(item, index) in dataTable" :key="item.id">
+                    <tr class="border-b">
+                        <td class="px-6 py-4">{{ item.id }}</td>
+                        <td class="px-6 py-4">{{ item.workName }}</td>
+                        <td class="px-6 py-4">
+                            {{ item.status ? "Active" : "Inactive" }}
+                        </td>
+                        <td class="px-6 py-4">
+                            <button
+                                @click="toggleDetails(index)"
+                                class="text-blue-600 hover:underline flex items-center"
+                            >
+                                <span v-if="!item.showDetails">▼</span>
+                                <span v-else>▲</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Additional row for details, conditionally rendered -->
+                    <tr v-if="item.showDetails" class="border-b">
+                        <td colspan="4" class="px-6 py-4">
                             Detailed info for {{ item.workName }}.
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -53,10 +59,11 @@ export default {
             ],
         };
     },
+    methods: {
+        toggleDetails(index) {
+            this.dataTable[index].showDetails =
+                !this.dataTable[index].showDetails;
+        },
+    },
 };
 </script>
-
-<!-- Add your styles or refer to style.css -->
-<style scoped>
-/* Your CSS here or keep styles in style.css */
-</style>
