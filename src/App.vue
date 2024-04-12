@@ -1,40 +1,59 @@
 <template>
     <div>
-        <!-- Button to toggle between form and home -->
-        <button @click="toggleWriting">
-            {{ writing ? "Go to Home" : "Create Form" }}
-        </button>
-
-        <!-- Conditionally render Form or Home component -->
-        <Form v-if="writing" />
-        <Home v-else />
+        <!-- Top Bar for Buttons -->
+        <div class="top-bar">
+            <button @click="toggleWriting" class="left-button">
+                {{ writing ? "Go to Home" : "Create Form" }}
+            </button>
+            <div class="right-section">
+                <button v-if="!user" @click="signIn">Sign In</button>
+                <div v-else>
+                    Hello, {{ user.displayName }} &nbsp;
+                    <button @click="signOutUser">Sign Out</button>
+                </div>
+            </div>
+        </div>
+        <!-- Main Content: Form or Home Component -->
+        <div class="content">
+            <Form v-if="writing" />
+            <Home v-else />
+        </div>
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, onUnmounted } from "vue";
 import Home from "./components/Home.vue";
 import Form from "./components/Form.vue";
+import {
+    useAuthentication,
+    useSignIn,
+    useSignOut,
+} from "./services/authService.js";
 
-export default {
-    components: {
-        Form,
-        Home,
-    },
-    data() {
-        return {
-            writing: false,
-        };
-    },
-    methods: {
-        toggleWriting() {
-            this.writing = !this.writing;
-        },
-    },
+const writing = ref(false);
+const { user, subscribe } = useAuthentication();
+const { signIn } = useSignIn();
+const { signOutUser } = useSignOut();
+
+const toggleWriting = () => {
+    writing.value = !writing.value;
 };
+
+let unsubscribe;
+onMounted(() => {
+    unsubscribe = subscribe();
+});
+
+onUnmounted(() => {
+    if (unsubscribe) {
+        unsubscribe();
+    }
+});
 </script>
 
 <style>
-/* Add your styles here */
+/* General button styling */
 button {
     background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
     border: none;
@@ -55,5 +74,26 @@ button:hover {
 
 button:focus {
     outline: none;
+}
+
+/* Top bar layout */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.left-button {
+    /* Additional styling if needed */
+}
+
+.right-section {
+    /* Additional styling if needed */
+}
+
+/* Styling for the main content area */
+.content {
+    margin-top: 20px;
 }
 </style>
