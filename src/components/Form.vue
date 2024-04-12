@@ -27,15 +27,6 @@
             placeholder="e.g., In Progress, Completed"
         />
 
-        <label for="dates">Dates:</label>
-        <input
-            type="text"
-            id="dates"
-            v-model="dates"
-            required
-            placeholder="e.g., 2024-04-01 - 2024-04-10"
-        />
-
         <label for="price">Price:</label>
         <input
             type="text"
@@ -86,17 +77,56 @@
 </template>
 
 <script>
+import { createWorkOrder } from "../services/workOrderService.js"; // Ensure the path is correct
+
 export default {
     data() {
         return {
-            name: "",
-            email: "",
+            workOrder: "",
+            category: "",
+            status: "",
+            price: "",
+            subCategory: "",
+            location: "",
+            laborHours: "",
+            description: "",
         };
     },
     methods: {
-        submitForm() {
-            // Handle form submission logic here
-            // You can access the form data using this.name and this.email
+        submitForm(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = {
+                workOrder: this.workOrder,
+                category: this.category,
+                status: this.status,
+                price: this.price,
+                subCategory: this.subCategory,
+                location: this.location,
+                laborHours: this.laborHours,
+                description: this.description,
+            };
+            console.log("Submitting:", formData);
+
+            createWorkOrder(formData)
+                .then((response) => {
+                    console.log("Work Order created successfully!", response);
+                    this.resetForm(); // Reset the form fields after successful submission
+                })
+                .catch((error) => {
+                    console.error("Failed to create work order", error);
+                    // Handle errors (e.g., show an error message to the user)
+                });
+        },
+        resetForm() {
+            // Reset all data properties to their initial state
+            this.workOrder = "";
+            this.category = "";
+            this.status = "";
+            this.price = "";
+            this.subCategory = "";
+            this.location = "";
+            this.laborHours = "";
+            this.description = "";
         },
     },
 };
