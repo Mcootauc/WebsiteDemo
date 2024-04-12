@@ -15,7 +15,11 @@
         </div>
         <!-- Main Content: Form or Home Component -->
         <div class="content">
-            <Form v-if="writing" />
+            <Form
+                v-if="writing"
+                :writing="writing"
+                @changeView="writing = false"
+            />
             <Home v-else />
         </div>
     </div>

@@ -76,59 +76,41 @@
     </form>
 </template>
 
-<script>
-import { createWorkOrder } from "../services/workOrderService.js"; // Ensure the path is correct
+<script setup>
+import { ref, defineEmits } from "vue";
+import { createWorkOrder } from "../services/workOrderService.js"; // Adjust the import path as needed
 
-export default {
-    data() {
-        return {
-            workOrder: "",
-            category: "",
-            status: "",
-            price: "",
-            subCategory: "",
-            location: "",
-            laborHours: "",
-            description: "",
-        };
-    },
-    methods: {
-        submitForm(event) {
-            event.preventDefault(); // Prevent the default form submission
-            const formData = {
-                workOrder: this.workOrder,
-                category: this.category,
-                status: this.status,
-                price: this.price,
-                subCategory: this.subCategory,
-                location: this.location,
-                laborHours: this.laborHours,
-                description: this.description,
-            };
-            console.log("Submitting:", formData);
+const emits = defineEmits(["changeView"]);
 
-            createWorkOrder(formData)
-                .then((response) => {
-                    console.log("Work Order created successfully!", response);
-                    this.resetForm(); // Reset the form fields after successful submission
-                })
-                .catch((error) => {
-                    console.error("Failed to create work order", error);
-                    // Handle errors (e.g., show an error message to the user)
-                });
-        },
-        resetForm() {
-            // Reset all data properties to their initial state
-            this.workOrder = "";
-            this.category = "";
-            this.status = "";
-            this.price = "";
-            this.subCategory = "";
-            this.location = "";
-            this.laborHours = "";
-            this.description = "";
-        },
-    },
+const workOrder = ref("");
+const category = ref("");
+const status = ref("");
+const price = ref("");
+const subCategory = ref("");
+const location = ref("");
+const laborHours = ref("");
+const description = ref("");
+
+const submitForm = async (event) => {
+    event.preventDefault();
+    const formData = {
+        workOrder: workOrder.value,
+        category: category.value,
+        status: status.value,
+        price: price.value,
+        subCategory: subCategory.value,
+        location: location.value,
+        laborHours: laborHours.value,
+        description: description.value,
+    };
+
+    try {
+        await createWorkOrder(formData);
+        console.log("Work Order created successfully!");
+        emits("changeView"); // Using emits to send the event
+    } catch (error) {
+        console.error("Failed to create work order", error);
+    }
 };
 </script>
 
