@@ -14,25 +14,15 @@
           </div>
         </form>
       </div>
-    <label class="inline-flex items-center cursor-pointer">
-      <input type="checkbox" value="" class="sr-only peer">
-      <div
-          @click="selectedProperty = !selectedProperty, console.log(selectedProperty)"
-          class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-      </div>
-      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle selected only</span>
-    </label>
      <Datepicker
          range
          lang="en"
          v-model="selectedDate"/>
     </div>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table
-        class = "w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-    >
-      <thead class="text-xs text-gray-700 uppercase bg-white-50 dark:bg-white-700 dark:text-gray-400"
-      >
+  <span class="inline-grid grid-cols-2 w-full">
+  <div class="inline-flex relative overflow-x-auto shadow-md sm:rounded-lg left justify-items-stretch">
+    <table class = "size-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-white-50 dark:bg-white-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">ID #</th>
         <th scope="col" class="px-6 py-3">Category</th>
@@ -41,8 +31,7 @@
       </tr>
       </thead>
       <tbody class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-             v-for="(item, index) in dataTable" :key="item.id"
-      >
+             v-for="(item, index) in dataTable" :key="item.id">
       <td class="px-6 py-4">{{ item.id }}</td>
           <td class="px-6 py-4">{{ item.workName }}</td>
           <td class="px-6 py-4">
@@ -61,36 +50,40 @@
         <tr v-if="item.showDetails" class="border-b">
           <td colspan="4" class="px-6 py-4">
             <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                class="w-full h-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             >
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" class="px-6 py-3">Work Type(s)</th>
-              <th scope="col" class="px-6 py-3">Dates</th>
-            </tr>
-            <tr class="border-b">
-              <td class="px-6 py-4">data pull from back-end</td>
-              <td class="px-6 py-4">data pull from back-end</td>
-            </tr>
-            <tr>
-            <th scope="col" class="px-6 py-3">Location</th>
-            <th scope="col" class="px-6 py-3">Completed On</th>
-            </tr>
-            <tr class="border-b">
-              <td class="px-6 py-4">data pull from back-end</td>
-              <td class="px-6 py-4">data pull from back-end</td>
-            </tr>
-            <th scope="col" class="px-6 py-3">Quick Description</th>
-            <tr>
-            <td class="px-6 py-4">data pull from back-end</td>
-            </tr>
-            </thead>
-          </table>
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" class="px-6 py-3">Work Type(s)</th>
+                  <th scope="col" class="px-6 py-3">Dates</th>
+                </tr>
+                <tr class="border-b">
+                  <td class="px-6 py-4">data pull from back-end</td>
+                  <td class="px-6 py-4">data pull from back-end</td>
+                </tr>
+                <tr>
+                <th scope="col" class="px-6 py-3">Location</th>
+                <th scope="col" class="px-6 py-3">Completed On</th>
+                </tr>
+                <tr class="border-b">
+                  <td class="px-6 py-4">data pull from back-end</td>
+                  <td class="px-6 py-4">data pull from back-end</td>
+                </tr>
+                <th scope="col" class="px-6 py-3">Quick Description</th>
+                <tr>
+                <td class="px-6 py-4">data pull from back-end</td>
+                </tr>
+              </thead>
+            </table>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+    <span class="justify-self-center ">
+      <img class="w-full h-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
+    </span>
+  </span>
 </template>
 
 <script>
@@ -106,6 +99,66 @@ export default {
     return {
       dataTable: [
         { id: "#1",
+          workName: "Task 1",
+          status: true,
+          showDetails: false
+        },
+        {
+          id: "#2",
+          workName: "Task 2",
+          status: false,
+          showDetails: false,
+        },
+        { id: "#5",
+          workName: "Task 3",
+          status: true,
+          showDetails: false
+        },
+        { id: "#4",
+          workName: "Task 4",
+          status: true,
+          showDetails: false
+        },{ id: "#1",
+          workName: "Task 1",
+          status: true,
+          showDetails: false
+        },
+        {
+          id: "#2",
+          workName: "Task 2",
+          status: false,
+          showDetails: false,
+        },
+        { id: "#5",
+          workName: "Task 3",
+          status: true,
+          showDetails: false
+        },
+        { id: "#4",
+          workName: "Task 4",
+          status: true,
+          showDetails: false
+        },{ id: "#1",
+          workName: "Task 1",
+          status: true,
+          showDetails: false
+        },
+        {
+          id: "#2",
+          workName: "Task 2",
+          status: false,
+          showDetails: false,
+        },
+        { id: "#5",
+          workName: "Task 3",
+          status: true,
+          showDetails: false
+        },
+        { id: "#4",
+          workName: "Task 4",
+          status: true,
+          showDetails: false
+        },{ id: "#1",
           workName: "Task 1",
           status: true,
           showDetails: false
