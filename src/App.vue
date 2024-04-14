@@ -84,7 +84,7 @@
     </table>
   </div>
     <span class="justify-self-center ">
-      <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
+      <img cover="cover" width="2000" height="363" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
 <!--      image got stretch out if the table is too long-->
     </span>
   </span>
@@ -175,3 +175,10 @@ export default {
   },
 }
 </script>
+<style>
+.cover {
+  object-fit: cover;
+  width: 500px;
+  height: 500px;
+}
+</style>
