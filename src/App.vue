@@ -13,15 +13,17 @@
             <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
           </div>
         </form>
+<!--        a search bar-->
       </div>
      <Datepicker
          range
          lang="en"
          v-model="selectedDate"/>
     </div>
+<!--  range datepicker for user to choose tasks on specific date range/ not yet implement-->
   <span class="inline-grid grid-cols-2 w-full">
   <div class="inline-flex relative overflow-x-auto shadow-md sm:rounded-lg left justify-items-stretch">
-    <table class = "size-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class = "size-full table-fixed text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-white-50 dark:bg-white-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">ID #</th>
@@ -46,12 +48,13 @@
               <span v-else>▲</span>
             </button>
           </td>
-        <!-- Additional row for details, conditionally rendered -->
-        <tr v-if="item.showDetails" class="border-b">
+        <!-- Additional rows for details, conditionally rendered -->
+        <tr v-if="item.showDetails" class="border-r">
           <td colspan="4" class="px-6 py-4">
             <table
-                class="w-full h-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                class="w-full max-h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
             >
+<!--              a table created inside the dropdown-->
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="px-6 py-3">Work Type(s)</th>
@@ -81,7 +84,8 @@
     </table>
   </div>
     <span class="justify-self-center ">
-      <img class="w-full h-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
+      <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
+<!--      image got stretch out if the table is too long-->
     </span>
   </span>
 </template>
@@ -151,31 +155,6 @@ export default {
         },
         { id: "#5",
           workName: "Task 3",
-          status: true,
-          showDetails: false
-        },
-        { id: "#4",
-          workName: "Task 4",
-          status: true,
-          showDetails: false
-        },{ id: "#1",
-          workName: "Task 1",
-          status: true,
-          showDetails: false
-        },
-        {
-          id: "#2",
-          workName: "Task 2",
-          status: false,
-          showDetails: false,
-        },
-        { id: "#5",
-          workName: "Task 3",
-          status: true,
-          showDetails: false
-        },
-        { id: "#4",
-          workName: "Task 4",
           status: true,
           showDetails: false
         },
