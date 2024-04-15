@@ -10,22 +10,21 @@
         />
 
         <label for="category">Category:</label>
-        <input
-            type="text"
-            id="category"
-            v-model="category"
-            required
-            placeholder="e.g., Electrical, Plumbing"
-        />
+        <select id="category" v-model="category" required>
+            <option disabled value="">Please select one</option>
+            <option value="Outdoors">Outdoors</option>
+            <option value="Kitchen">Kitchen</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Other">Other</option>
+        </select>
 
         <label for="status">Status:</label>
-        <input
-            type="text"
-            id="status"
-            v-model="status"
-            required
-            placeholder="e.g., In Progress, Completed"
-        />
+        <select id="status" v-model="status" required>
+            <option disabled value="">Please select one</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
 
         <label for="price">Price:</label>
         <input
@@ -37,13 +36,16 @@
         />
 
         <label for="subCategory">Sub Category:</label>
-        <input
-            type="text"
-            id="subCategory"
-            v-model="subCategory"
-            required
-            placeholder="e.g., Cut Grass, Install Light Fixture"
-        />
+        <select id="subCategory" v-model="subCategory" required>
+            <option disabled value="">Please select one</option>
+            <option
+                v-for="option in availableSubCategories"
+                :key="option"
+                :value="option"
+            >
+                {{ option }}
+            </option>
+        </select>
 
         <label for="location">Location:</label>
         <input
@@ -77,7 +79,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits } from "vue";
+import { ref, computed, defineEmits } from "vue";
 import { createWorkOrder } from "../services/workOrderService.js"; // Adjust the import path as needed
 
 const emits = defineEmits(["changeView"]);
@@ -90,6 +92,20 @@ const subCategory = ref("");
 const location = ref("");
 const laborHours = ref("");
 const description = ref("");
+
+// Define the possible subcategories for each category
+const subCategoryOptions = {
+    Outdoors: ["Lawn", "Exterior Cleaning", "Gardening", "Other"],
+    Kitchen: ["Appliance Installation", "Cabinetry", "Plumbing", "Other"],
+    Plumbing: ["Leak Repairs", "Installation", "Maintenance", "Other"],
+    Electronics: ["Repair", "Setup", "Maintenance", "Other"],
+    Other: ["Other"],
+};
+
+// Computed property to get the subcategories based on the selected category
+const availableSubCategories = computed(() => {
+    return subCategoryOptions[category.value] || [];
+});
 
 const submitForm = async (event) => {
     event.preventDefault();
@@ -107,7 +123,7 @@ const submitForm = async (event) => {
     try {
         await createWorkOrder(formData);
         console.log("Work Order created successfully!");
-        emits("changeView"); // Using emits to send the event
+        emits("changeView"); // Using emits to send the event// Emit an event to signal the parent to change view or close the form
     } catch (error) {
         console.error("Failed to create work order", error);
     }

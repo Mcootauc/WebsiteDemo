@@ -97,7 +97,6 @@
 </template>
 
 <script setup>
-import VueDatepickerUi from "vue-datepicker-ui";
 import "vue-datepicker-ui/lib/vuedatepickerui.css";
 import "flowbite";
 import { ref, onMounted } from "vue";
