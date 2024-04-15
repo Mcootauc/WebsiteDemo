@@ -1,6 +1,38 @@
 // services/workOrderService.js
 import { db } from "../firebaseConfig";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import {
+    collection,
+    addDoc,
+    Timestamp,
+    getDocs,
+    query,
+    orderBy,
+} from "firebase/firestore";
+
+export async function fetchWorkOrders() {
+    const workOrders = [];
+    const q = query(
+        collection(db, "workOrders"),
+        orderBy("dateCreated", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        workOrders.push({
+            id: doc.id,
+            category: data.category,
+            dateCreated: data.dateCreated.toDate(), // Assuming dateCreated is a Timestamp
+            description: data.description,
+            laborHours: data.laborHours,
+            location: data.location,
+            price: data.price,
+            status: data.status,
+            subCategory: data.subCategory,
+            workOrder: data.workOrder,
+        });
+    });
+    return workOrders;
+}
 
 export async function createWorkOrder(formData) {
     const data = {
