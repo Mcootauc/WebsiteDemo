@@ -1,5 +1,6 @@
 <template>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <!-- Table Section -->
         <span class="inline-grid grid-cols-2 w-full">
             <table
                 class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
@@ -21,8 +22,18 @@
                         <td class="px-6 py-4">{{ item.workOrder }}</td>
                         <td class="px-6 py-4">{{ item.category }}</td>
                         <td class="px-6 py-4">
-                            {{ item.status }}
+                            <span
+                                :class="{
+                                    'status-completed':
+                                        item.status === 'Completed',
+                                    'status-in-progress':
+                                        item.status === 'In Progress',
+                                }"
+                            >
+                                {{ item.status }}
+                            </span>
                         </td>
+
                         <td class="px-6 py-4">
                             <button
                                 @click="toggleDetails(index)"
@@ -140,6 +151,21 @@ function toggleDetails(index) {
 
 <style scoped>
 /* Existing styles remain, add the following: */
+.status-completed {
+    padding: 2px 6px; /* Adjust padding as needed */
+    background-color: #d1fee9; /* Light green background */
+    color: #10b981; /* Green text */
+    border: 1px solid #10b981; /* Green border */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.status-in-progress {
+    padding: 2px 6px; /* Adjust padding as needed */
+    background-color: #fef3c7; /* Light yellow background */
+    color: #eab308; /* Yellow text */
+    border: 1px solid #eab308; /* Yellow border */
+    border-radius: 4px; /* Rounded corners */
+}
 
 /* Styling for detail rows */
 .detail-row {

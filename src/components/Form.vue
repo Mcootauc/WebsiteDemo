@@ -1,14 +1,5 @@
 <template>
     <form @submit="submitForm">
-        <label for="workOrder#">Work Order #:</label>
-        <input
-            type="text"
-            id="workOrder#"
-            v-model="workOrder"
-            required
-            placeholder="e.g, 1187345"
-        />
-
         <label for="category">Category:</label>
         <select id="category" v-model="category" required>
             <option disabled value="">Please select one</option>
@@ -79,8 +70,11 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from 'vue';
-import { createWorkOrder } from '../services/workOrderService.js'; // Adjust the import path as needed
+import { ref, computed, defineEmits, onMounted } from 'vue'; // Ensure onMounted is imported here
+import {
+    createWorkOrder,
+    fetchLatestWorkOrderId,
+} from '../services/workOrderService.js'; // Adjust the import path as needed
 
 const emits = defineEmits(['changeView']);
 
@@ -107,6 +101,16 @@ const availableSubCategories = computed(() => {
     return subCategoryOptions[category.value] || [];
 });
 
+// Initialize the form with the next available work order ID
+const initializeForm = async () => {
+    const latestId = await fetchLatestWorkOrderId();
+    workOrder.value = (parseInt(latestId, 10) + 1).toString().padStart(6, '0'); // Ensure it's a 6-digit number
+};
+
+onMounted(() => {
+    initializeForm();
+});
+
 const submitForm = async (event) => {
     event.preventDefault();
     const formData = {
@@ -123,7 +127,7 @@ const submitForm = async (event) => {
     try {
         await createWorkOrder(formData);
         console.log('Work Order created successfully!');
-        emits('changeView'); // Using emits to send the event// Emit an event to signal the parent to change view or close the form
+        emits('changeView'); // Using emits to send the event
     } catch (error) {
         console.error('Failed to create work order', error);
     }
@@ -172,5 +176,12 @@ button {
 
 button:hover {
     background-color: #45a049; /* darker green on hover */
+}
+
+.bg-green-100 {
+    background-color: #ecfdf5; /* A lighter green background */
+}
+.border-green-500 {
+    border: 2px solid #10b981; /* A solid green border */
 }
 </style>

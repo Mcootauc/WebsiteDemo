@@ -1,5 +1,5 @@
 // services/workOrderService.js
-import { db } from "../firebaseConfig";
+import { db } from '../firebaseConfig';
 import {
     collection,
     addDoc,
@@ -7,13 +7,29 @@ import {
     getDocs,
     query,
     orderBy,
-} from "firebase/firestore";
+    limit, // Make sure to import this
+} from 'firebase/firestore';
+
+// Fetches the latest work order ID
+export async function fetchLatestWorkOrderId() {
+    const q = query(
+        collection(db, 'workOrders'),
+        orderBy('workOrder', 'desc'),
+        limit(1)
+    );
+    const querySnapshot = await getDocs(q);
+    let highestId = 0;
+    querySnapshot.forEach((doc) => {
+        highestId = doc.data().workOrder; // Assuming workOrder is stored as a string
+    });
+    return highestId;
+}
 
 export async function fetchWorkOrders() {
     const workOrders = [];
     const q = query(
-        collection(db, "workOrders"),
-        orderBy("dateCreated", "desc")
+        collection(db, 'workOrders'),
+        orderBy('dateCreated', 'desc')
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
@@ -40,10 +56,10 @@ export async function createWorkOrder(formData) {
         dateCreated: Timestamp.now(), // Captures the creation timestamp
     };
     try {
-        const docRef = await addDoc(collection(db, "workOrders"), data);
+        const docRef = await addDoc(collection(db, 'workOrders'), data);
         return { id: docRef.id, ...data };
     } catch (error) {
-        console.error("Error adding document: ", error);
-        throw new Error("Failed to create work order");
+        console.error('Error adding document: ', error);
+        throw new Error('Failed to create work order');
     }
 }
