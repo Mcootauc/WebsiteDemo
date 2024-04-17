@@ -9,10 +9,9 @@
                     class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
                 >
                     <tr>
-                        <th scope="col" class="px-6 py-3">ID #</th>
+                        <th scope="col" class="px-6 py-3">Work Order #</th>
                         <th scope="col" class="px-6 py-3">Category</th>
                         <th scope="col" class="px-6 py-3">Status</th>
-                        <th scope="col" class="px-6 py-3">Action</th>
                     </tr>
                 </thead>
                 <tbody v-for="(item, index) in workOrders" :key="item.id">
