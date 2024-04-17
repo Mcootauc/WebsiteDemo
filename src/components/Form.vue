@@ -137,10 +137,10 @@ const submitForm = async (event) => {
 <style scoped>
 /* General form styling */
 form {
-    background-color: #f7f7f7; /* light grey background */
+    background-color: #d1d0d0; /* light grey background */
     padding: 20px;
     border-radius: 8px;
-    max-width: 600px;
+    max-width: 500px;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -149,7 +149,7 @@ form {
 label {
     display: block;
     margin-bottom: 8px;
-    margin-top: 20px;
+    margin-top: 15px;
     color: #333;
     font-size: 16px;
 }

@@ -1,4 +1,3 @@
-// services/workOrderService.js
 import { db } from '../firebaseConfig';
 import {
     collection,
@@ -7,8 +6,20 @@ import {
     getDocs,
     query,
     orderBy,
-    limit, // Make sure to import this
+    limit,
 } from 'firebase/firestore';
+
+// Utility function to format dates
+function formatDate(timestamp) {
+    const date = timestamp.toDate(); // Convert Timestamp to JavaScript Date object
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        month: 'long', // Long month name
+        day: 'numeric', // Numeric day
+    });
+    const formattedDate = formatter.format(date);
+
+    return formattedDate;
+}
 
 // Fetches the latest work order ID
 export async function fetchLatestWorkOrderId() {
@@ -20,7 +31,7 @@ export async function fetchLatestWorkOrderId() {
     const querySnapshot = await getDocs(q);
     let highestId = 0;
     querySnapshot.forEach((doc) => {
-        highestId = doc.data().workOrder; // Assuming workOrder is stored as a string
+        highestId = doc.data().workOrder;
     });
     return highestId;
 }
@@ -37,7 +48,7 @@ export async function fetchWorkOrders() {
         workOrders.push({
             id: doc.id,
             category: data.category,
-            dateCreated: data.dateCreated.toDate(), // Assuming dateCreated is a Timestamp
+            dateCreated: formatDate(data.dateCreated), // Ensure this is where the formatted date is set
             description: data.description,
             laborHours: data.laborHours,
             location: data.location,

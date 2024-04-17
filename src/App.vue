@@ -32,7 +32,7 @@
             </button>
             <button v-if="user" @click="signOutUser">Sign Out</button>
         </div>
-        <!-- Mid Bar for Inputs -->
+        <!-- Bottom Bar for Inputs -->
         <div class="bottom-bar">
             <input
                 type="text"
