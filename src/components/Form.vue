@@ -79,27 +79,27 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits } from "vue";
-import { createWorkOrder } from "../services/workOrderService.js"; // Adjust the import path as needed
+import { ref, computed, defineEmits } from 'vue';
+import { createWorkOrder } from '../services/workOrderService.js'; // Adjust the import path as needed
 
-const emits = defineEmits(["changeView"]);
+const emits = defineEmits(['changeView']);
 
-const workOrder = ref("");
-const category = ref("");
-const status = ref("");
-const price = ref("");
-const subCategory = ref("");
-const location = ref("");
-const laborHours = ref("");
-const description = ref("");
+const workOrder = ref('');
+const category = ref('');
+const status = ref('');
+const price = ref('');
+const subCategory = ref('');
+const location = ref('');
+const laborHours = ref('');
+const description = ref('');
 
 // Define the possible subcategories for each category
 const subCategoryOptions = {
-    Outdoors: ["Lawn", "Exterior Cleaning", "Gardening", "Other"],
-    Kitchen: ["Appliance Installation", "Cabinetry", "Plumbing", "Other"],
-    Plumbing: ["Leak Repairs", "Installation", "Maintenance", "Other"],
-    Electronics: ["Repair", "Setup", "Maintenance", "Other"],
-    Other: ["Other"],
+    Outdoors: ['Lawn', 'Exterior Cleaning', 'Gardening', 'Other'],
+    Kitchen: ['Appliance Installation', 'Cabinetry', 'Plumbing', 'Other'],
+    Plumbing: ['Leak Repairs', 'Installation', 'Maintenance', 'Other'],
+    Electronics: ['Repair', 'Setup', 'Maintenance', 'Other'],
+    Other: ['Other'],
 };
 
 // Computed property to get the subcategories based on the selected category
@@ -122,10 +122,10 @@ const submitForm = async (event) => {
 
     try {
         await createWorkOrder(formData);
-        console.log("Work Order created successfully!");
-        emits("changeView"); // Using emits to send the event// Emit an event to signal the parent to change view or close the form
+        console.log('Work Order created successfully!');
+        emits('changeView'); // Using emits to send the event// Emit an event to signal the parent to change view or close the form
     } catch (error) {
-        console.error("Failed to create work order", error);
+        console.error('Failed to create work order', error);
     }
 };
 </script>
@@ -151,7 +151,7 @@ label {
 }
 
 /* Style for input fields */
-input[type="text"] {
+input[type='text'] {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px; /* space below each input */

@@ -1,5 +1,5 @@
 <template>
-    <div>
+  <div>
         <!-- Top Bar for Buttons -->
         <div class="top-bar">
             <button @click="toggleWriting" class="left-button">
@@ -88,7 +88,7 @@ button:focus {
     padding: 10px 20px;
 }
 
-.left-button {
+ .left-button {
     /* Additional styling if needed */
 }
 
