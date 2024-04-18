@@ -1,76 +1,81 @@
 <template>
-    <div>
-        <!-- Header Section -->
-        <div class="top-bar">
-            <div class="houseWithCircleAndSquare">
-                <div class="square"></div>
-                <div class="houseCircle"></div>
-                <div id="house">
-                    <h1 id="houseName">Java</h1>
-                    <h2 id="houseDescription">Smokey Mountains</h2>
+    <div class="app-container">
+        <div>
+            <!-- Header Section -->
+            <div class="top-bar">
+                <div class="houseWithCircleAndSquare">
+                    <div class="square"></div>
+                    <div class="houseCircle"></div>
+                    <div id="house">
+                        <h1 id="houseName">Java</h1>
+                        <h2 id="houseDescription">Smokey Mountains</h2>
+                    </div>
+                </div>
+                <h1 id="viewListing">View Listing</h1>
+                <span class="middleButtons">
+                    <h1>Overview</h1>
+                    <h1>Bookings</h1>
+                    <h1 id="workOrders">Work Orders</h1>
+                </span>
+                <div class="houseWithCircleAndSquare">
+                    <div class="notificationCircle"></div>
+                    <div class="userCircle"></div>
+                    <div class="right-section">
+                        <button v-if="!user" @click="signIn">Sign In</button>
+                        <div v-else>{{ user.displayName }} &nbsp;</div>
+                    </div>
                 </div>
             </div>
-            <h1 id="viewListing">View Listing</h1>
-            <span class="middleButtons">
-                <h1>Overview</h1>
-                <h1>Bookings</h1>
-                <h1 id="workOrders">Work Orders</h1>
-            </span>
-            <div class="houseWithCircleAndSquare">
-                <div class="notificationCircle"></div>
-                <div class="userCircle"></div>
-                <div class="right-section">
-                    <button v-if="!user" @click="signIn">Sign In</button>
-                    <div v-else>{{ user.displayName }} &nbsp;</div>
+            <!-- Mid Bar for Buttons -->
+            <div class="mid-bar">
+                <button @click="toggleWriting" class="left-button">
+                    {{ writing ? 'Go to Home' : 'Create Form' }}
+                </button>
+                <button v-if="user" @click="signOutUser">Sign Out</button>
+            </div>
+            <!-- Bottom Bar for Inputs -->
+            <div class="bottom-bar">
+                <input
+                    type="text"
+                    placeholder="Search by work order # or category..."
+                    class="px-9 py-3 border rounded"
+                />
+                <div class="properties">
+                    <button id="selectedProperty">Selected Property</button>
+                    <h1>All Properties</h1>
                 </div>
+                <input
+                    type="text"
+                    placeholder="Created"
+                    class="px-3 py-3 border rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Completed"
+                    class="px-3 py-3 border rounded"
+                />
+                <input
+                    type="text"
+                    placeholder="Work Order Status"
+                    class="px-3 py-3 border rounded"
+                />
             </div>
-        </div>
-        <!-- Mid Bar for Buttons -->
-        <div class="mid-bar">
-            <button @click="toggleWriting" class="left-button">
-                {{ writing ? 'Go to Home' : 'Create Form' }}
-            </button>
-            <button v-if="user" @click="signOutUser">Sign Out</button>
-        </div>
-        <!-- Bottom Bar for Inputs -->
-        <div class="bottom-bar">
-            <input
-                type="text"
-                placeholder="Search by work order # or category..."
-                class="px-9 py-3 border rounded"
-            />
-            <div class="properties">
-                <button id="selectedProperty">Selected Property</button>
-                <h1>All Properties</h1>
+            <h1 class="clearFiltersButton">
+                <span class="circleIndicator"></span>
+                Clear all filters
+            </h1>
+            <!-- Main Content: Form or Home Component -->
+            <div v-if="user" class="signedIn">
+                <Form
+                    v-if="writing"
+                    :writing="writing"
+                    @changeView="writing = false"
+                />
+                <Home v-else />
             </div>
-            <input
-                type="text"
-                placeholder="Created"
-                class="px-3 py-3 border rounded"
-            />
-            <input
-                type="text"
-                placeholder="Completed"
-                class="px-3 py-3 border rounded"
-            />
-            <input
-                type="text"
-                placeholder="Work Order Status"
-                class="px-3 py-3 border rounded"
-            />
-        </div>
-        <h1 class="clearFiltersButton">
-            <span class="circleIndicator"></span>
-            Clear all filters
-        </h1>
-        <!-- Main Content: Form or Home Component -->
-        <div class="content">
-            <Form
-                v-if="writing"
-                :writing="writing"
-                @changeView="writing = false"
-            />
-            <Home v-else />
+            <div v-else class="signedOut">
+                <h1>Please sign in to view the content!</h1>
+            </div>
         </div>
     </div>
 </template>
@@ -107,6 +112,25 @@ onUnmounted(() => {
 </script>
 
 <style>
+/* General styles that apply at any size */
+.app-container {
+    min-width: 320px; /* Ensures the app never gets narrower than 320px */
+}
+
+/* Styles specific for screens wider than 320px */
+@media (min-width: 321px) {
+    .app-container {
+        /* Additional styles for larger screens can go here */
+    }
+}
+
+/* Styles for screens wider than 768px (typical tablet breakpoint) */
+@media (min-width: 768px) {
+    .app-container {
+        /* Styles for larger devices like tablets and desktops */
+    }
+}
+
 /* General button styling */
 button {
     background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
@@ -279,7 +303,15 @@ button:focus {
 }
 
 /* Styling for the main content area */
-.content {
+.signedIn {
     margin-top: 20px;
+}
+
+.signedOut {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    align-self: center;
 }
 </style>

@@ -1,133 +1,162 @@
 <template>
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <!-- Table Section -->
-        <span class="inline-grid grid-cols-2 w-full">
-            <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-            >
-                <thead
-                    class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        <div v-if="workOrders.length > 0" class="content-container">
+            <!-- Table Container -->
+            <div class="table-container">
+                <table
+                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
                 >
-                    <tr>
-                        <th scope="col" class="px-6 py-3">Work Order #</th>
-                        <th scope="col" class="px-6 py-3">Category</th>
-                        <th scope="col" class="px-6 py-3">Status</th>
-                    </tr>
-                </thead>
-                <tbody v-for="(item, index) in workOrders" :key="item.id">
-                    <tr
-                        class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                    <thead
+                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
                     >
-                        <td class="px-6 py-4">{{ item.workOrder }}</td>
-                        <td class="px-6 py-4">{{ item.category }}</td>
-                        <td class="px-6 py-4">
-                            <span
-                                :class="{
-                                    'status-completed':
-                                        item.status === 'Completed',
-                                    'status-in-progress':
-                                        item.status === 'In Progress',
-                                }"
-                            >
-                                {{ item.status }}
-                            </span>
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <button
-                                @click="toggleDetails(index)"
-                                class="text-blue-600 hover:underline flex items-center"
-                            >
-                                <span v-if="!item.showDetails">▼</span>
-                                <span v-else>▲</span>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Conditional rendering for additional details with new styles -->
-                    <transition name="slide-fade">
-                        <tr v-if="item.showDetails" class="border-b">
-                            <td colspan="4" class="px-6 py-4">
-                                <table
-                                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Work Order #</th>
+                            <th scope="col" class="px-6 py-3">Category</th>
+                            <th scope="col" class="px-6 py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody v-for="(item, index) in workOrders" :key="item.id">
+                        <tr
+                            class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                        >
+                            <td class="px-6 py-4">{{ item.workOrder }}</td>
+                            <td class="px-6 py-4">{{ item.category }}</td>
+                            <td class="px-6 py-4">
+                                <span
+                                    :class="{
+                                        'status-completed':
+                                            item.status === 'Completed',
+                                        'status-in-progress':
+                                            item.status === 'In Progress',
+                                    }"
                                 >
-                                    <thead
-                                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                                    >
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">
-                                                Date Created
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Price
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Contact
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b">
-                                            <td class="px-6 py-4">
-                                                {{ item.dateCreated }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ item.price }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                123-456-7890
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col" class="px-6 py-3">
-                                                Sub Category
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Location
-                                            </th>
-                                            <th scope="col" class="px-6 py-3">
-                                                Labor Hours
-                                            </th>
-                                        </tr>
-                                        <tr class="border-b">
-                                            <td class="px-6 py-4">
-                                                {{ item.subCategory }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ item.location }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ item.laborHours }}
-                                            </td>
-                                        </tr>
-                                        <!-- Separate row for description -->
-                                        <tr>
-                                            <th colspan="3" class="px-6 py-3">
-                                                Description
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" class="px-6 py-4">
-                                                {{ item.description }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                    {{ item.status }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4">
+                                <button
+                                    @click="toggleDetails(index)"
+                                    class="text-blue-600 hover:underline flex items-center"
+                                >
+                                    <span v-if="!item.showDetails">▼</span>
+                                    <span v-else>▲</span>
+                                </button>
                             </td>
                         </tr>
-                    </transition>
-                </tbody>
-            </table>
-            <span class="justify-self-center">
+                        <!-- Conditional rendering for additional details with new styles -->
+                        <transition name="slide-fade">
+                            <tr v-if="item.showDetails" class="border-b">
+                                <td colspan="4" class="px-6 py-4">
+                                    <table
+                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                                    >
+                                        <thead
+                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+                                        >
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Date Created
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Price
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Contact
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="border-b">
+                                                <td class="px-6 py-4">
+                                                    {{ item.dateCreated }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    ${{ item.price }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    123-456-7890
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Sub Category
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Location
+                                                </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Labor Time
+                                                </th>
+                                            </tr>
+                                            <tr class="border-b">
+                                                <td class="px-6 py-4">
+                                                    {{ item.subCategory }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    {{ item.location }}
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    {{ item.laborHours }}
+                                                </td>
+                                            </tr>
+                                            <!-- Separate row for description -->
+                                            <tr>
+                                                <th
+                                                    colspan="3"
+                                                    class="px-6 py-3"
+                                                >
+                                                    Description
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    colspan="3"
+                                                    class="px-6 py-4"
+                                                >
+                                                    {{ item.description }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </transition>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Image Container -->
+            <div class="image-container">
                 <img
-                    cover="cover"
-                    width="500"
-                    height="363"
                     src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png"
                     alt="description"
+                    style="max-width: 100%; height: auto"
                 />
-                <!--      image got stretch out if the table is too long-->
-            </span>
-        </span>
+            </div>
+        </div>
+        <!-- No Work Orders Message -->
+        <div v-else class="flex justify-center items-center h-full">
+            <h1>No workorders created!</h1>
+        </div>
     </div>
 </template>
 
@@ -149,6 +178,40 @@ function toggleDetails(index) {
 </script>
 
 <style scoped>
+.content-container {
+    display: flex;
+    justify-content: space-between; /* Aligns children horizontally with space between them */
+    align-items: flex-start; /* Aligns children to the top of the container */
+    gap: 20px;
+    flex-wrap: nowrap;
+}
+
+.table-container {
+    flex: 1 1 60%;
+    max-width: 60%;
+}
+
+.image-container {
+    flex: 1 1 40%;
+    max-width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .content-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+}
+
 /* Existing styles remain, add the following: */
 .status-completed {
     padding: 2px 6px; /* Adjust padding as needed */

@@ -17,11 +17,13 @@
             <option value="Completed">Completed</option>
         </select>
 
-        <label for="price">Price:</label>
+        <label for="price">Price ($):</label>
         <input
-            type="text"
+            type="number"
             id="price"
-            v-model="price"
+            v-model.number="price"
+            min="0.01"
+            step="0.01"
             required
             placeholder="e.g., $5000"
         />
@@ -61,9 +63,13 @@
             type="text"
             id="description"
             v-model="description"
+            @input="checkLength"
+            maxlength="100"
             required
             placeholder="e.g., Mow the lawn, Install a new light fixture"
         />
+        <div>{{ description.length }}/100 characters</div>
+        <!-- Displays character count -->
 
         <button type="submit">Submit</button>
     </form>
@@ -113,6 +119,13 @@ onMounted(() => {
 
 const submitForm = async (event) => {
     event.preventDefault();
+
+    // Validation for price to be greater than zero
+    if (parseFloat(price.value) <= 0) {
+        console.error('Price must be greater than zero');
+        return; // Stop the form submission if validation fails
+    }
+
     const formData = {
         workOrder: workOrder.value,
         category: category.value,
