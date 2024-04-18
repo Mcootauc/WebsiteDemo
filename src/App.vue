@@ -31,7 +31,9 @@
                 <button @click="toggleWriting" class="left-button">
                     {{ writing ? 'Go to Home' : 'Create Form' }}
                 </button>
-                <button v-if="user" @click="signOutUser">Sign Out</button>
+                <button class="right-button" v-if="user" @click="signOutUser">
+                    Sign Out
+                </button>
             </div>
             <!-- Bottom Bar for Inputs -->
             <div class="bottom-bar">
@@ -112,6 +114,28 @@ onUnmounted(() => {
 </script>
 
 <style>
+.left-button {
+    background-color: rgb(197, 151, 90);
+    color: black;
+    padding: 7px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.right-button {
+    background-color: rgb(197, 151, 90);
+    color: black;
+    padding: 7px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+#selectedProperty {
+    background-color: #4facfe;
+    padding: 2px 2px;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
 /* General styles that apply at any size */
 .app-container {
     min-width: 320px; /* Ensures the app never gets narrower than 320px */
@@ -132,27 +156,6 @@ onUnmounted(() => {
 }
 
 /* General button styling */
-button {
-    background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-button:hover {
-    background-image: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-button:focus {
-    outline: none;
-}
 
 /* Top bar layout */
 .top-bar {

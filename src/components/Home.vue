@@ -11,18 +11,28 @@
                         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
                     >
                         <tr>
-                            <th scope="col" class="px-6 py-3">Work Order #</th>
-                            <th scope="col" class="px-6 py-3">Category</th>
-                            <th scope="col" class="px-6 py-3">Status</th>
+                            <th scope="col" class="center-text px-6 py-3">
+                                Work Order #
+                            </th>
+                            <th scope="col" class="center-text px-6 py-3">
+                                Category
+                            </th>
+                            <th scope="col" class="center-text px-6 py-3">
+                                Status
+                            </th>
                         </tr>
                     </thead>
                     <tbody v-for="(item, index) in workOrders" :key="item.id">
                         <tr
                             class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                         >
-                            <td class="px-6 py-4">{{ item.workOrder }}</td>
-                            <td class="px-6 py-4">{{ item.category }}</td>
-                            <td class="px-6 py-4">
+                            <td class="center-text px-6 py-4">
+                                {{ item.workOrder }}
+                            </td>
+                            <td class="center-text px-6 py-4">
+                                {{ item.category }}
+                            </td>
+                            <td class="center-text px-6 py-4">
                                 <span
                                     :class="{
                                         'status-completed':
@@ -38,7 +48,7 @@
                             <td class="px-6 py-4">
                                 <button
                                     @click="toggleDetails(index)"
-                                    class="text-blue-600 hover:underline flex items-center"
+                                    class="text-grey-600 hover:underline flex items-center"
                                 >
                                     <span v-if="!item.showDetails">▼</span>
                                     <span v-else>▲</span>
@@ -74,6 +84,11 @@
                                                 >
                                                     Contact
                                                 </th>
+                                                <th
+                                                    scope="col"
+                                                    class="px-6 py-3"
+                                                ></th>
+                                                <!-- Empty cell for better spacing -->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -178,6 +193,17 @@ function toggleDetails(index) {
 </script>
 
 <style scoped>
+/* Center align specific table headers and cells */
+.center-text {
+    text-align: center;
+}
+
+/* Ensure that only designated headers and cells are centered */
+.table-container .center-text {
+    text-align: center;
+    padding-right: 6px; /* Maintain uniform padding if necessary */
+    padding-left: 6px;
+}
 .content-container {
     display: flex;
     justify-content: space-between; /* Aligns children horizontally with space between them */
