@@ -9,12 +9,12 @@ import {
     limit,
 } from 'firebase/firestore';
 
-// Utility function to format dates
+// Formats dates
 function formatDate(timestamp) {
-    const date = timestamp.toDate(); // Convert Timestamp to JavaScript Date object
+    const date = timestamp.toDate();
     const formatter = new Intl.DateTimeFormat('en-US', {
-        month: 'long', // Long month name
-        day: 'numeric', // Numeric day
+        month: 'long',
+        day: 'numeric',
     });
     const formattedDate = formatter.format(date);
 
@@ -48,7 +48,7 @@ export async function fetchWorkOrders() {
         workOrders.push({
             id: doc.id,
             category: data.category,
-            dateCreated: formatDate(data.dateCreated), // Ensure this is where the formatted date is set
+            dateCreated: formatDate(data.dateCreated),
             description: data.description,
             laborHours: data.laborHours,
             location: data.location,
@@ -64,7 +64,7 @@ export async function fetchWorkOrders() {
 export async function createWorkOrder(formData) {
     const data = {
         ...formData,
-        dateCreated: Timestamp.now(), // Captures the creation timestamp
+        dateCreated: Timestamp.now(),
     };
     try {
         const docRef = await addDoc(collection(db, 'workOrders'), data);

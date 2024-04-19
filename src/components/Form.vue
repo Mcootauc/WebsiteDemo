@@ -69,18 +69,16 @@
             placeholder="e.g., Mow the lawn, Install a new light fixture"
         />
         <div>{{ description.length }}/100 characters</div>
-        <!-- Displays character count -->
-
         <button type="submit">Submit</button>
     </form>
 </template>
 
 <script setup>
-import { ref, computed, defineEmits, onMounted } from 'vue'; // Ensure onMounted is imported here
+import { ref, computed, defineEmits, onMounted } from 'vue';
 import {
     createWorkOrder,
     fetchLatestWorkOrderId,
-} from '../services/workOrderService.js'; // Adjust the import path as needed
+} from '../services/workOrderService.js';
 
 const emits = defineEmits(['changeView']);
 
@@ -93,7 +91,6 @@ const location = ref('');
 const laborHours = ref('');
 const description = ref('');
 
-// Define the possible subcategories for each category
 const subCategoryOptions = {
     Outdoors: ['Lawn', 'Exterior Cleaning', 'Gardening', 'Other'],
     Kitchen: ['Appliance Installation', 'Cabinetry', 'Plumbing', 'Other'],
@@ -123,7 +120,7 @@ const submitForm = async (event) => {
     // Validation for price to be greater than zero
     if (parseFloat(price.value) <= 0) {
         console.error('Price must be greater than zero');
-        return; // Stop the form submission if validation fails
+        return;
     }
 
     const formData = {
@@ -140,7 +137,7 @@ const submitForm = async (event) => {
     try {
         await createWorkOrder(formData);
         console.log('Work Order created successfully!');
-        emits('changeView'); // Using emits to send the event
+        emits('changeView'); // Change the view to Home component
     } catch (error) {
         console.error('Failed to create work order', error);
     }
@@ -148,10 +145,8 @@ const submitForm = async (event) => {
 </script>
 
 <style scoped>
-/* General form styling */
-
 form {
-    background-color: #d1d0d0; /* light grey background */
+    background-color: #d1d0d0;
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
@@ -159,7 +154,6 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for labels */
 label {
     display: block;
     margin-bottom: 8px;
@@ -168,18 +162,16 @@ label {
     font-size: 16px;
 }
 
-/* Style for input fields */
 input[type='text'] {
     width: 100%;
     padding: 8px;
-    margin-bottom: 10px; /* space below each input */
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-/* Styling the submit button */
 button {
-    background-color: #4caf50; /* green background */
+    background-color: #4caf50;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -187,15 +179,7 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
-
 button:hover {
-    background-color: #45a049; /* darker green on hover */
-}
-
-.bg-green-100 {
-    background-color: #ecfdf5; /* A lighter green background */
-}
-.border-green-500 {
-    border: 2px solid #10b981; /* A solid green border */
+    background-color: #45a049;
 }
 </style>
