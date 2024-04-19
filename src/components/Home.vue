@@ -1,74 +1,74 @@
 <template>
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <!-- Table Section -->
-        <div v-if="workOrders.length > 0" class="content-container">
-            <!-- Table Container -->
-            <div class="table-container">
-                <table
-                    class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+    <div v-if="isLoading" class="loading-message">
+        <span>Loading...</span>
+        <!-- Loading indicator -->
+    </div>
+    <!-- Table Section -->
+    <div v-else-if="workOrders.length > 0" class="content-container">
+        <!-- Table Container -->
+        <div class="table-container">
+            <table
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+            >
+                <thead
+                    class="text-xs text-gray-700 uppercase zdark:bg-gray-700 dark:text-gray-400 border-b dark:border-gray-700"
                 >
-                    <thead
-                        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                    >
-                        <tr>
-                            <th scope="col" class="center-text px-6 py-3">
-                                Work Order #
-                            </th>
-                            <th scope="col" class="center-text px-6 py-3">
-                                Category
-                            </th>
-                            <th scope="col" class="center-text px-6 py-3">
-                                Status
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody v-for="(item, index) in workOrders" :key="item.id">
-                        <tr
-                            class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-                        >
-                            <td class="center-text px-6 py-4">
-                                {{ item.workOrder }}
-                            </td>
-                            <td class="center-text px-6 py-4">
-                                {{ item.category }}
-                            </td>
-                            <td class="center-text px-6 py-4">
-                                <span
-                                    :class="{
-                                        'status-completed':
-                                            item.status === 'Completed',
-                                        'status-in-progress':
-                                            item.status === 'In Progress',
-                                    }"
-                                >
-                                    {{ item.status }}
-                                </span>
-                            </td>
+                    <tr>
+                        <th scope="col" class="center-text px-6 py-5">
+                            Work Order #
+                        </th>
+                        <th scope="col" class="center-text px-6 py-5">
+                            Category
+                        </th>
+                        <th scope="col" class="center-text px-6 py-5">
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+                <tbody v-for="(item, index) in workOrders" :key="item.id">
+                    <tr class="primary-cell border-b dark:border-gray-700">
+                        <td class="center-text px-6 py-4">
+                            {{ item.workOrder }}
+                        </td>
+                        <td class="center-text px-6 py-4">
+                            {{ item.category }}
+                        </td>
+                        <td class="center-text px-6 py-4">
+                            <span
+                                :class="{
+                                    'status-completed':
+                                        item.status === 'Completed',
+                                    'status-in-progress':
+                                        item.status === 'In Progress',
+                                }"
+                            >
+                                {{ item.status }}
+                            </span>
+                        </td>
 
-                            <td class="px-6 py-4">
-                                <button
-                                    @click="toggleDetails(index)"
-                                    class="text-grey-600 hover:underline flex items-center"
-                                >
-                                    <span v-if="!item.showDetails">▼</span>
-                                    <span v-else>▲</span>
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Conditional rendering for additional details with new styles -->
-                        <transition name="slide-fade">
-                            <tr v-if="item.showDetails" class="border-b">
-                                <td colspan="4" class="px-6 py-4">
+                        <td class="px-2 py-4 center-content">
+                            <button
+                                @click="toggleDetails(index)"
+                                class="button-blue"
+                            >
+                                <span v-if="!item.showDetails">▼</span>
+                                <span v-else>▲</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Conditional rendering for additional details with new styles -->
+                    <transition name="slide-fade">
+                        <tr v-if="item.showDetails" class="border-b">
+                            <td colspan="4">
+                                <div class="detail-table-container">
                                     <table
-                                        class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+                                        class="detail-table text-sm text-left text-gray-500 dark:text-gray-400"
                                     >
-                                        <thead
-                                            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-                                        >
+                                        <tbody>
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    class="px-6 py-3"
+                                                    class="px-5 py-3"
                                                 >
                                                     Date Created
                                                 </th>
@@ -86,14 +86,14 @@
                                                 </th>
                                                 <th
                                                     scope="col"
-                                                    class="px-6 py-3"
+                                                    class="px-2 py-3"
                                                 ></th>
                                                 <!-- Empty cell for better spacing -->
                                             </tr>
-                                        </thead>
+                                        </tbody>
                                         <tbody>
-                                            <tr class="border-b">
-                                                <td class="px-6 py-4">
+                                            <tr>
+                                                <td class="px-5 py-4">
                                                     {{ item.dateCreated }}
                                                 </td>
                                                 <td class="px-6 py-4">
@@ -106,7 +106,7 @@
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    class="px-6 py-3"
+                                                    class="px-5 py-3"
                                                 >
                                                     Sub Category
                                                 </th>
@@ -123,8 +123,8 @@
                                                     Labor Time
                                                 </th>
                                             </tr>
-                                            <tr class="border-b">
-                                                <td class="px-6 py-4">
+                                            <tr>
+                                                <td class="px-5 py-4">
                                                     {{ item.subCategory }}
                                                 </td>
                                                 <td class="px-6 py-4">
@@ -138,7 +138,7 @@
                                             <tr>
                                                 <th
                                                     colspan="3"
-                                                    class="px-6 py-3"
+                                                    class="px-5 py-3"
                                                 >
                                                     Description
                                                 </th>
@@ -146,32 +146,32 @@
                                             <tr>
                                                 <td
                                                     colspan="3"
-                                                    class="px-6 py-4"
+                                                    class="px-5 py-4"
                                                 >
                                                     {{ item.description }}
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </td>
-                            </tr>
-                        </transition>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Image Container -->
-            <div class="image-container">
-                <img
-                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png"
-                    alt="description"
-                    style="max-width: 100%; height: auto"
-                />
-            </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </transition>
+                </tbody>
+            </table>
         </div>
-        <!-- No Work Orders Message -->
-        <div v-else class="flex justify-center items-center h-full">
-            <h1>No workorders created!</h1>
+
+        <div>
+            <img
+                src="https://st.hzcdn.com/simgs/pictures/exteriors/high-park-currant-interior-design-img~f71130a6024f3947_4-3756-1-6f7b4f3.jpg"
+                alt="description"
+                style="max-width: 100%; height: auto"
+            />
         </div>
+    </div>
+    <!-- No Work Orders Message -->
+    <div v-else class="no-data-message">
+        <h1>No workorders created!</h1>
     </div>
 </template>
 
@@ -182,9 +182,14 @@ import { ref, onMounted } from 'vue';
 import { fetchWorkOrders } from '../services/workOrderService';
 
 const workOrders = ref([]);
+const isLoading = ref(true); // State to track loading status
 
 onMounted(async () => {
-    workOrders.value = await fetchWorkOrders();
+    try {
+        workOrders.value = await fetchWorkOrders();
+    } finally {
+        isLoading.value = false; // Set loading to false after fetching data
+    }
 });
 
 function toggleDetails(index) {
@@ -193,6 +198,52 @@ function toggleDetails(index) {
 </script>
 
 <style scoped>
+.table-container table tbody:nth-child(odd) > .primary-cell {
+    background-color: #f9fafc; /* Light gray for odd rows */
+}
+
+.table-container table tbody:nth-child(even) > .primary-cell {
+    background-color: #ffffff; /* White for even rows */
+}
+.detail-table-container {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Center the details table horizontally */
+    width: 100%; /* Ensures the container takes full available width */
+}
+.detail-table {
+    width: 83%; /* Adjust this width as needed to prevent the table from using the full width */
+}
+.center-content {
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+}
+.button-blue {
+    color: #83b2f7; /* Text color */
+    border: none; /* Removes any default border */
+    cursor: pointer;
+    padding: 8px 16px; /* Adjust padding to your needs */
+    border-radius: 4px; /* Optional: for rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+.button-blue:hover {
+    text-decoration: underline; /* Adds underline on hover */
+}
+
+/* If there's more specific styling needed for loading or no-data messages */
+.loading-message,
+.no-data-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
 /* Center align specific table headers and cells */
 .center-text {
     text-align: center;
@@ -208,7 +259,6 @@ function toggleDetails(index) {
     display: flex;
     justify-content: space-between; /* Aligns children horizontally with space between them */
     align-items: flex-start; /* Aligns children to the top of the container */
-    gap: 20px;
     flex-wrap: nowrap;
 }
 
@@ -221,8 +271,6 @@ function toggleDetails(index) {
     flex: 1 1 40%;
     max-width: 40%;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 @media (max-width: 1024px) {

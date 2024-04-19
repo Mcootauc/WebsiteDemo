@@ -1,32 +1,32 @@
 <template>
     <div class="app-container">
-        <div>
-            <!-- Header Section -->
-            <div class="top-bar">
-                <div class="houseWithCircleAndSquare">
-                    <div class="square"></div>
-                    <div class="houseCircle"></div>
-                    <div id="house">
-                        <h1 id="houseName">Java</h1>
-                        <h2 id="houseDescription">Smokey Mountains</h2>
-                    </div>
-                </div>
-                <h1 id="viewListing">View Listing</h1>
-                <span class="middleButtons">
-                    <h1>Overview</h1>
-                    <h1>Bookings</h1>
-                    <h1 id="workOrders">Work Orders</h1>
-                </span>
-                <div class="houseWithCircleAndSquare">
-                    <div class="notificationCircle"></div>
-                    <div class="userCircle"></div>
-                    <div class="right-section">
-                        <button v-if="!user" @click="signIn">Sign In</button>
-                        <div v-else>{{ user.displayName }} &nbsp;</div>
-                    </div>
+        <!-- Header Section -->
+        <div class="top-bar">
+            <div class="houseWithCircleAndSquare">
+                <div class="square"></div>
+                <div class="houseCircle"></div>
+                <div id="house">
+                    <h1 id="houseName">Java</h1>
+                    <h2 id="houseDescription">Smokey Mountains</h2>
                 </div>
             </div>
-            <!-- Mid Bar for Buttons -->
+            <h1 id="viewListing">View Listing</h1>
+            <span class="middleButtons">
+                <h1>Overview</h1>
+                <h1>Bookings</h1>
+                <h1 id="workOrders">Work Orders</h1>
+            </span>
+            <div class="houseWithCircleAndSquare">
+                <div class="notificationCircle"></div>
+                <div class="userCircle"></div>
+                <div class="right-section">
+                    <button v-if="!user" @click="signIn">Sign In</button>
+                    <div v-else>{{ user.displayName }} &nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <!-- Mid Bar for Buttons -->
+        <div class="barBackgound border-b dark:border-gray-700">
             <div class="mid-bar">
                 <button @click="toggleWriting" class="left-button">
                     {{ writing ? 'Go to Home' : 'Create Form' }}
@@ -43,8 +43,10 @@
                     class="px-9 py-3 border rounded"
                 />
                 <div class="properties">
-                    <button id="selectedProperty">Selected Property</button>
-                    <h1>All Properties</h1>
+                    <div id="selectedAndAll">
+                        <button id="selectedProperty">Selected Property</button>
+                        <h1 id="allProperties">All Properties</h1>
+                    </div>
                 </div>
                 <input
                     type="text"
@@ -66,18 +68,18 @@
                 <span class="circleIndicator"></span>
                 Clear all filters
             </h1>
-            <!-- Main Content: Form or Home Component -->
-            <div v-if="user" class="signedIn">
-                <Form
-                    v-if="writing"
-                    :writing="writing"
-                    @changeView="writing = false"
-                />
-                <Home v-else />
-            </div>
-            <div v-else class="signedOut">
-                <h1>Please sign in to view the content!</h1>
-            </div>
+        </div>
+        <!-- Main Content: Form or Home Component -->
+        <div v-if="user" class="signedIn">
+            <Form
+                v-if="writing"
+                :writing="writing"
+                @changeView="writing = false"
+            />
+            <Home v-else />
+        </div>
+        <div v-else class="signedOut">
+            <h1>Please sign in to view the content!</h1>
         </div>
     </div>
 </template>
@@ -114,6 +116,11 @@ onUnmounted(() => {
 </script>
 
 <style>
+.barBackgound {
+    background-color: #f9fafc;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
 .left-button {
     background-color: rgb(197, 151, 90);
     color: black;
@@ -129,15 +136,28 @@ onUnmounted(() => {
     cursor: pointer;
 }
 #selectedProperty {
-    background-color: #4facfe;
+    background-color: #3082ed;
     padding: 2px 2px;
     color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+#allProperties {
+    color: #a9afb1;
+}
+#selectedAndAll {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    border: 1px solid #ccd0d0;
+    padding: 2px 4px;
     border-radius: 20px;
     cursor: pointer;
 }
 
 /* General styles that apply at any size */
 .app-container {
+    height: 100vh;
     min-width: 320px; /* Ensures the app never gets narrower than 320px */
 }
 
@@ -176,7 +196,7 @@ onUnmounted(() => {
 .houseCircle {
     width: 40px; /* Circle size */
     height: 40px; /* Circle size */
-    background-color: burlywood; /* Circle color */
+    background-color: #be9054; /* Circle color */
     border-radius: 50%; /* Makes the div a circle */
     margin-right: 10px; /* Space between the circle and the text */
 }
@@ -184,7 +204,7 @@ onUnmounted(() => {
 .notificationCircle {
     width: 35px; /* Circle size */
     height: 35px; /* Circle size */
-    background-color: gray; /* Circle color */
+    background-color: #21252c; /* Circle color */
     border-radius: 50%; /* Makes the div a circle */
     margin-right: 20px; /* Space between the circle and the text */
 }
@@ -192,7 +212,7 @@ onUnmounted(() => {
 .userCircle {
     width: 40px; /* Circle size */
     height: 40px; /* Circle size */
-    background-color: blue; /* Circle color */
+    background-color: #2c839c; /* Circle color */
     border-radius: 50%; /* Makes the div a circle */
     margin-right: 10px; /* Space between the circle and the text */
 }
@@ -220,7 +240,7 @@ onUnmounted(() => {
 
 #viewListing {
     color: white;
-    background-color: gray;
+    background-color: #1b1e27;
     padding: 0 10px 0 10px;
 }
 
@@ -236,7 +256,7 @@ onUnmounted(() => {
 #workOrders {
     position: relative; /* Required for absolute positioning of pseudo-element */
     background-color: transparent;
-    color: #4facfe;
+    color: #4e87c4;
     border: none;
     text-decoration: none; /* Remove default underline if it's a link or styled button */
     font-size: 1rem;
@@ -283,7 +303,7 @@ onUnmounted(() => {
     padding: 0;
     margin-left: 20px;
     border: none;
-    color: black;
+    color: #a9afb1;
     cursor: pointer;
     font-size: 16px;
 }
@@ -293,7 +313,7 @@ onUnmounted(() => {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    border: 1px solid #4facfe;
+    border: 1px solid #a9afb1;
     transition: background-color 0.3s ease;
 }
 
@@ -307,14 +327,17 @@ onUnmounted(() => {
 
 /* Styling for the main content area */
 .signedIn {
-    margin-top: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .signedOut {
     display: flex;
     justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
     margin-top: 20px;
     font-size: 1.5rem;
-    align-self: center;
 }
 </style>

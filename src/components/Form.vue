@@ -149,6 +149,7 @@ const submitForm = async (event) => {
 
 <style scoped>
 /* General form styling */
+
 form {
     background-color: #d1d0d0; /* light grey background */
     padding: 20px;
