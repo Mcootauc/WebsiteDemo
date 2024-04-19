@@ -1,11 +1,10 @@
 <template>
+    <!-- Loading Section -->
     <div v-if="isLoading" class="loading-message">
         <span>Loading...</span>
-        <!-- Loading indicator -->
     </div>
     <!-- Table Section -->
     <div v-else-if="workOrders.length > 0" class="content-container">
-        <!-- Table Container -->
         <div class="table-container">
             <table
                 class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
@@ -55,14 +54,9 @@
                             </button>
                         </td>
                     </tr>
-                    <!-- Conditional rendering for additional details with new styles -->
+                    <!-- Transition and extra details -->
                     <transition name="fade">
-                        <tr
-                            v-if="item.showDetails"
-                            class="border-b"
-                            name="list"
-                            is="transition-group"
-                        >
+                        <tr v-if="item.showDetails" class="border-b">
                             <td colspan="4">
                                 <div class="detail-table-container">
                                     <table
@@ -133,7 +127,6 @@
                                                     {{ item.laborHours }}
                                                 </td>
                                             </tr>
-                                            <!-- Separate row for description -->
                                             <tr>
                                                 <th
                                                     colspan="3"
@@ -159,15 +152,16 @@
                 </tbody>
             </table>
         </div>
+        <!-- Image Section -->
         <div>
             <img
                 src="https://st.hzcdn.com/simgs/pictures/exteriors/high-park-currant-interior-design-img~f71130a6024f3947_4-3756-1-6f7b4f3.jpg"
-                alt="description"
+                alt="Home Image"
                 style="max-width: 100%; height: auto"
             />
         </div>
     </div>
-    <!-- No Work Orders Message -->
+    <!-- No Work Orders Section -->
     <div v-else class="no-data-message">
         <h1>No workorders created!</h1>
     </div>
@@ -179,14 +173,14 @@ import 'flowbite';
 import { ref, onMounted } from 'vue';
 import { fetchWorkOrders } from '../services/workOrderService';
 
-const workOrders = ref([]);
+const workOrders = ref([]); // State to store work orders
 const isLoading = ref(true); // State to track loading status
 
 onMounted(async () => {
     try {
         workOrders.value = await fetchWorkOrders();
     } finally {
-        isLoading.value = false; // Set loading to false after fetching data
+        isLoading.value = false;
     }
 });
 
@@ -196,6 +190,39 @@ function toggleDetails(index) {
 </script>
 
 <style scoped>
+.button-blue {
+    color: #83b2f7;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 4px; /
+}
+.button-blue span {
+    display: inline-block; /* Allows transformation */
+    transition: transform 0.5s ease;
+}
+.rotate-up {
+    transform: rotate(180deg);
+}
+
+.loading-message,
+.no-data-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.center-text,
+.center-text-title {
+    text-align: center;
+}
+.center-text-title {
+    font-size: large;
+}
+
 .table-container table tbody:nth-child(odd) > .primary-cell {
     background-color: #f9fafc; /* Light gray for odd rows */
 }
@@ -207,78 +234,104 @@ function toggleDetails(index) {
     padding-left: 40px;
     margin: 0;
     display: flex;
-    justify-content: center; /* Center the details table horizontally */
-    width: 100%; /* Ensures the container takes full available width */
+    justify-content: center;
+    width: 100%;
 }
 .detail-table {
-    width: 91%; /* Adjust this width as needed to prevent the table from using the full width */
+    width: 91%;
 }
+
 .center-content {
-    display: flex;
-    justify-content: center; /* Horizontally center the content */
-    align-items: center; /* Vertically center the content */
-}
-.button-blue {
-    color: #83b2f7; /* Text color */
-    border: none; /* Removes any default border */
-    cursor: pointer;
-    padding: 8px 16px; /* Adjust padding to your needs */
-    border-radius: 4px; /* Optional: for rounded corners */
-    transition: background-color 0.3s; /* Smooth transition for background color */
-}
-
-.button-blue:hover {
-    text-decoration: underline; /* Adds underline on hover */
-}
-
-.button-blue span {
-    display: inline-block; /* Allows transformation */
-    transition: transform 0.5s ease; /* Smooth transition for transform */
-}
-
-.rotate-up {
-    transform: rotate(180deg); /* Rotates the element 180 degrees */
-}
-
-/* If there's more specific styling needed for loading or no-data messages */
-.loading-message,
-.no-data-message {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh;
-    width: 100%;
-    font-size: 1.5rem;
 }
 
-/* Center align specific table headers and cells */
-.center-text,
-.center-text-title {
-    text-align: center;
-}
-.center-text-title {
-    font-size: large;
-}
-/* Ensure that only designated headers and cells are centered */
 .table-container .center-text {
     text-align: center;
 }
-.content-container {
-    display: flex;
-    justify-content: space-between; /* Aligns children horizontally with space between them */
-    align-items: flex-start; /* Aligns children to the top of the container */
-    flex-wrap: nowrap;
-}
-
 .table-container {
     flex: 1 1 60%;
     max-width: 60%;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
 }
 
 .image-container {
     flex: 1 1 40%;
     max-width: 40%;
     display: flex;
+}
+
+.status-completed,
+.status-in-progress {
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.status-completed {
+    background-color: #d1fee9;
+    color: #10b981;
+    border: 1px solid #10b981;
+}
+.status-in-progress {
+    background-color: #fef3c7;
+    color: #eab308;
+    border: 1px solid #eab308;
+}
+
+/* Styling for detail rows */
+.detail-row {
+    background-color: #f3f3f3;
+    color: #333;
+}
+.detail-cell {
+    padding-left: 2rem;
+    border-top: 1px solid #ccc; /* Top border for separation */
+}
+
+/* Active transition states */
+.fade-enter-from {
+    opacity: 0;
+}
+.fade-enter-to {
+    opacity: 1;
+}
+.fade-enter-active {
+    transition: all 1s ease;
+}
+.fade-leave-from {
+    opacity: 1;
+}
+.fade-leave-to {
+    opacity: 0;
+}
+.fade-leave-active {
+    transition: all 0.7s ease;
+}
+
+.rotate-enter-from {
+    opacity: 0;
+}
+.rotate-enter-to {
+    opacity: 1;
+}
+.rotate-enter-active {
+    transition: all 1s ease;
+}
+.rotate-leave-from {
+    opacity: 1;
+}
+.rotate-leave-to {
+    opacity: 0;
+}
+.rotate-leave-active {
+    transition: all 0.7s ease;
 }
 
 @media (max-width: 1024px) {
@@ -292,76 +345,5 @@ function toggleDetails(index) {
     .content-container {
         flex-direction: column;
     }
-}
-
-/* Existing styles remain, add the following: */
-.status-completed,
-.status-in-progress {
-    padding: 3px 10px; /* Adjust padding as needed */
-    border-radius: 4px; /* Rounded corners */
-    font-weight: bold; /* Bold text for emphasis */
-}
-.status-completed {
-    background-color: #d1fee9; /* Light green background */
-    color: #10b981; /* Green text */
-    border: 1px solid #10b981; /* Green border */
-}
-
-.status-in-progress {
-    background-color: #fef3c7; /* Light yellow background */
-    color: #eab308; /* Yellow text */
-    border: 1px solid #eab308; /* Yellow border */
-}
-
-/* Styling for detail rows */
-.detail-row {
-    background-color: #f3f3f3; /* Light grey background for detail rows */
-    color: #333; /* Darker text color for better contrast */
-}
-
-.detail-cell {
-    padding-left: 2rem; /* Indent the content of detail cells */
-    border-top: 1px solid #ccc; /* Add a top border for separation */
-}
-
-/* Active transition states */
-.fade-enter-from {
-    opacity: 0;
-}
-.fade-enter-to {
-    opacity: 1;
-}
-.fade-enter-active {
-    transition: all 1s ease; /* Adjust the direction/magnitude as needed */
-}
-
-.fade-leave-from {
-    opacity: 1;
-}
-.fade-leave-to {
-    opacity: 0;
-}
-.fade-leave-active {
-    transition: all 0.7s ease; /* Adjust the direction/magnitude as needed */
-}
-
-.rotate-enter-from {
-    opacity: 0;
-}
-.rotate-enter-to {
-    opacity: 1;
-}
-.rotate-enter-active {
-    transition: all 1s ease; /* Adjust the direction/magnitude as needed */
-}
-
-.rotate-leave-from {
-    opacity: 1;
-}
-.rotate-leave-to {
-    opacity: 0;
-}
-.rotate-leave-active {
-    transition: all 0.7s ease; /* Adjust the direction/magnitude as needed */
 }
 </style>
