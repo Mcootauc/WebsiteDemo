@@ -10,29 +10,27 @@
             <table
                 class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
             >
-                <thead
-                    class="text-xs text-gray-700 uppercase zdark:bg-gray-700 dark:text-gray-400 border-b dark:border-gray-700"
-                >
+                <thead class="border-b dark:border-gray-700">
                     <tr>
-                        <th scope="col" class="center-text px-6 py-5">
+                        <td scope="col" class="center-text-title px-6 py-5">
                             Work Order #
-                        </th>
-                        <th scope="col" class="center-text px-6 py-5">
+                        </td>
+                        <td scope="col" class="center-text-title px-6 py-5">
                             Category
-                        </th>
-                        <th scope="col" class="center-text px-6 py-5">
+                        </td>
+                        <td scope="col" class="center-text-title px-6 py-5">
                             Status
-                        </th>
+                        </td>
                     </tr>
                 </thead>
                 <tbody v-for="(item, index) in workOrders" :key="item.id">
                     <tr class="primary-cell border-b dark:border-gray-700">
-                        <td class="center-text px-6 py-4">
+                        <th class="center-text px-6 py-4">
                             {{ item.workOrder }}
-                        </td>
-                        <td class="center-text px-6 py-4">
+                        </th>
+                        <th class="center-text px-6 py-4">
                             {{ item.category }}
-                        </td>
+                        </th>
                         <td class="center-text px-6 py-4">
                             <span
                                 :class="{
@@ -57,7 +55,7 @@
                         </td>
                     </tr>
                     <!-- Conditional rendering for additional details with new styles -->
-                    <transition name="slide-fade">
+                    <transition name="fade">
                         <tr v-if="item.showDetails" class="border-b">
                             <td colspan="4">
                                 <div class="detail-table-container">
@@ -68,7 +66,7 @@
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    class="px-5 py-3"
+                                                    class="px-6 py-3"
                                                 >
                                                     Date Created
                                                 </th>
@@ -84,16 +82,11 @@
                                                 >
                                                     Contact
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-2 py-3"
-                                                ></th>
-                                                <!-- Empty cell for better spacing -->
                                             </tr>
                                         </tbody>
                                         <tbody>
                                             <tr>
-                                                <td class="px-5 py-4">
+                                                <td class="px-6 py-4">
                                                     {{ item.dateCreated }}
                                                 </td>
                                                 <td class="px-6 py-4">
@@ -106,7 +99,7 @@
                                             <tr>
                                                 <th
                                                     scope="col"
-                                                    class="px-5 py-3"
+                                                    class="px-6 py-3"
                                                 >
                                                     Sub Category
                                                 </th>
@@ -124,7 +117,7 @@
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <td class="px-5 py-4">
+                                                <td class="px-6 py-4">
                                                     {{ item.subCategory }}
                                                 </td>
                                                 <td class="px-6 py-4">
@@ -138,7 +131,7 @@
                                             <tr>
                                                 <th
                                                     colspan="3"
-                                                    class="px-5 py-3"
+                                                    class="px-6 py-3"
                                                 >
                                                     Description
                                                 </th>
@@ -146,7 +139,7 @@
                                             <tr>
                                                 <td
                                                     colspan="3"
-                                                    class="px-5 py-4"
+                                                    class="px-6 py-4"
                                                 >
                                                     {{ item.description }}
                                                 </td>
@@ -160,7 +153,6 @@
                 </tbody>
             </table>
         </div>
-
         <div>
             <img
                 src="https://st.hzcdn.com/simgs/pictures/exteriors/high-park-currant-interior-design-img~f71130a6024f3947_4-3756-1-6f7b4f3.jpg"
@@ -206,14 +198,14 @@ function toggleDetails(index) {
     background-color: #ffffff; /* White for even rows */
 }
 .detail-table-container {
-    padding: 0;
+    padding-left: 40px;
     margin: 0;
     display: flex;
     justify-content: center; /* Center the details table horizontally */
     width: 100%; /* Ensures the container takes full available width */
 }
 .detail-table {
-    width: 83%; /* Adjust this width as needed to prevent the table from using the full width */
+    width: 91%; /* Adjust this width as needed to prevent the table from using the full width */
 }
 .center-content {
     display: flex;
@@ -245,15 +237,16 @@ function toggleDetails(index) {
 }
 
 /* Center align specific table headers and cells */
-.center-text {
+.center-text,
+.center-text-title {
     text-align: center;
 }
-
+.center-text-title {
+    font-size: large;
+}
 /* Ensure that only designated headers and cells are centered */
 .table-container .center-text {
     text-align: center;
-    padding-right: 6px; /* Maintain uniform padding if necessary */
-    padding-left: 6px;
 }
 .content-container {
     display: flex;
@@ -287,20 +280,22 @@ function toggleDetails(index) {
 }
 
 /* Existing styles remain, add the following: */
+.status-completed,
+.status-in-progress {
+    padding: 3px 10px; /* Adjust padding as needed */
+    border-radius: 4px; /* Rounded corners */
+    font-weight: bold; /* Bold text for emphasis */
+}
 .status-completed {
-    padding: 2px 6px; /* Adjust padding as needed */
     background-color: #d1fee9; /* Light green background */
     color: #10b981; /* Green text */
     border: 1px solid #10b981; /* Green border */
-    border-radius: 4px; /* Rounded corners */
 }
 
 .status-in-progress {
-    padding: 2px 6px; /* Adjust padding as needed */
     background-color: #fef3c7; /* Light yellow background */
     color: #eab308; /* Yellow text */
     border: 1px solid #eab308; /* Yellow border */
-    border-radius: 4px; /* Rounded corners */
 }
 
 /* Styling for detail rows */
@@ -315,17 +310,23 @@ function toggleDetails(index) {
 }
 
 /* Active transition states */
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
+.fade-enter-from {
+    opacity: 0;
+}
+.fade-enter-to {
+    opacity: 1;
+}
+.fade-enter-active {
+    transition: all 1s ease; /* Adjust the direction/magnitude as needed */
 }
 
-/* Initial state for entering and final state for leaving */
-.slide-fade-enter,
-.slide-fade-leave-to {
+.fade-leave-from {
+    opacity: 1;
+}
+.fade-leave-to {
     opacity: 0;
-    transform: translateY(10px); /* Adjust the direction/magnitude as needed */
+}
+.fade-leave-active {
+    transition: all 0.7s ease; /* Adjust the direction/magnitude as needed */
 }
 </style>
