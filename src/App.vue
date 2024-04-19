@@ -120,7 +120,7 @@ onUnmounted(() => {
 <style>
 .app-container {
     height: 100vh;
-    min-width: 320px;
+    min-width: 800px;
 }
 
 .top-bar {
@@ -227,16 +227,21 @@ onUnmounted(() => {
 .mid-bar,
 .bottom-bar {
     display: flex;
+    flex-direction: column;
     gap: 20px;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 20px;
+}
+.bottom-bar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 0 auto 10px;
 }
 #left-button,
 #right-button {
     background-color: rgb(197, 151, 90);
     color: black;
-    padding: 7px 20px;
+    padding: 7px 15px;
     border-radius: 20px;
     cursor: pointer;
 }
@@ -292,21 +297,29 @@ onUnmounted(() => {
     align-items: center;
     height: 60vh;
     width: 100%;
-    margin-top: 20px;
+    margin-top: px;
     font-size: 1.5rem;
 }
 
-/* Styles specific for screens wider than 320px */
-@media (min-width: 321px) {
-    .app-container {
-        /* Additional styles for larger screens can go here */
+@media (min-width: 800px) {
+    .house-with-circle-and-square {
+        justify-content: start;
+    }
+    .bar-background {
+        padding: 10px 8px;
     }
 }
 
-/* Styles for screens wider than 768px (typical tablet breakpoint) */
-@media (min-width: 768px) {
-    .app-container {
-        /* Styles for larger devices like tablets and desktops */
+@media (min-width: 650px) {
+    .mid-bar,
+    .bottom-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .bottom-bar input {
+        width: auto;
+        flex-grow: 1;
     }
 }
 </style>

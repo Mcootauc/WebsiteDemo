@@ -195,7 +195,7 @@ function toggleDetails(index) {
     border: none;
     cursor: pointer;
     padding: 8px 16px;
-    border-radius: 4px; /
+    border-radius: 4px;
 }
 .button-blue span {
     display: inline-block; /* Allows transformation */

@@ -68,7 +68,7 @@
             required
             placeholder="e.g., Mow the lawn, Install a new light fixture"
         />
-        <div>{{ description.length }}/100 characters</div>
+        <div id="character-length">{{ description.length }}/100 characters</div>
         <button type="submit">Submit</button>
     </form>
 </template>
@@ -168,6 +168,12 @@ input[type='text'] {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+#character-length {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
 }
 
 button {
