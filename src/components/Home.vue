@@ -49,14 +49,20 @@
                                 @click="toggleDetails(index)"
                                 class="button-blue"
                             >
-                                <span v-if="!item.showDetails">▼</span>
-                                <span v-else>▲</span>
+                                <span :class="{ 'rotate-up': item.showDetails }"
+                                    ><i class="bi bi-chevron-down"></i
+                                ></span>
                             </button>
                         </td>
                     </tr>
                     <!-- Conditional rendering for additional details with new styles -->
                     <transition name="fade">
-                        <tr v-if="item.showDetails" class="border-b">
+                        <tr
+                            v-if="item.showDetails"
+                            class="border-b"
+                            name="list"
+                            is="transition-group"
+                        >
                             <td colspan="4">
                                 <div class="detail-table-container">
                                     <table
@@ -225,6 +231,15 @@ function toggleDetails(index) {
     text-decoration: underline; /* Adds underline on hover */
 }
 
+.button-blue span {
+    display: inline-block; /* Allows transformation */
+    transition: transform 0.5s ease; /* Smooth transition for transform */
+}
+
+.rotate-up {
+    transform: rotate(180deg); /* Rotates the element 180 degrees */
+}
+
 /* If there's more specific styling needed for loading or no-data messages */
 .loading-message,
 .no-data-message {
@@ -327,6 +342,26 @@ function toggleDetails(index) {
     opacity: 0;
 }
 .fade-leave-active {
+    transition: all 0.7s ease; /* Adjust the direction/magnitude as needed */
+}
+
+.rotate-enter-from {
+    opacity: 0;
+}
+.rotate-enter-to {
+    opacity: 1;
+}
+.rotate-enter-active {
+    transition: all 1s ease; /* Adjust the direction/magnitude as needed */
+}
+
+.rotate-leave-from {
+    opacity: 1;
+}
+.rotate-leave-to {
+    opacity: 0;
+}
+.rotate-leave-active {
     transition: all 0.7s ease; /* Adjust the direction/magnitude as needed */
 }
 </style>
