@@ -40,31 +40,25 @@
                 <input
                     type="text"
                     placeholder="Search by work order # or category..."
-                    class="px-9 py-3 border rounded"
+                    class="px-3 py-3 border rounded"
                 />
-                <div class="properties">
-                    <div class="selected-and-all">
-                        <button id="selected-property">
-                            Selected Property
-                        </button>
-                        <h1 id="all-properties">All Properties</h1>
-                    </div>
+                <div class="three-inputs">
+                    <input
+                        type="text"
+                        placeholder="Created"
+                        class="px-3 py-3 border rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Completed"
+                        class="px-3 py-3 border rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Work Order Status"
+                        class="px-3 py-3 border rounded"
+                    />
                 </div>
-                <input
-                    type="text"
-                    placeholder="Created"
-                    class="px-3 py-3 border rounded"
-                />
-                <input
-                    type="text"
-                    placeholder="Completed"
-                    class="px-3 py-3 border rounded"
-                />
-                <input
-                    type="text"
-                    placeholder="Work Order Status"
-                    class="px-3 py-3 border rounded"
-                />
             </div>
             <h1 class="clear-filters-button">
                 <span id="circle-indicator"></span>
@@ -224,49 +218,43 @@ onUnmounted(() => {
     padding-top: 10px;
 }
 
-.mid-bar,
-.bottom-bar {
+.mid-bar {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 10px 20px;
 }
+
+.bottom-bar {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 20px;
+    width: 75%;
+}
+
 .bottom-bar input {
     width: 100%;
     max-width: 400px;
     padding: 12px;
     margin: 0 auto 10px;
 }
+
+.three-inputs {
+    display: flex;
+    padding-left: 8vw;
+    gap: 30px;
+}
+
 #left-button,
 #right-button {
+    font-size: 15px;
     background-color: rgb(197, 151, 90);
     color: black;
     padding: 7px 15px;
     border-radius: 20px;
     cursor: pointer;
-}
-
-.properties {
-    display: flex;
-    gap: 10px;
-    cursor: pointer;
-}
-.selected-and-all {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    border: 1px solid #ccd0d0;
-    padding: 2px 4px;
-    border-radius: 20px;
-}
-#selected-property {
-    background-color: #3082ed;
-    padding: 2px 2px;
-    color: white;
-    border-radius: 20px;
-}
-#all-properties {
-    color: #a9afb1;
 }
 
 .clear-filters-button {
