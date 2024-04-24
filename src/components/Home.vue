@@ -64,82 +64,58 @@
                                     >
                                         <tbody>
                                             <tr>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Date Created
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Price
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Contact
                                                 </th>
                                             </tr>
                                         </tbody>
                                         <tbody>
                                             <tr>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     {{ item.dateCreated }}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     ${{ item.price }}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     123-456-7890
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Sub Category
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Location
                                                 </th>
-                                                <th
-                                                    scope="col"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th scope="col" class="px-6">
                                                     Labor Time
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     {{ item.subCategory }}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     {{ item.location }}
                                                 </td>
-                                                <td class="px-6 py-4">
+                                                <td class="px-6">
                                                     {{ item.laborHours }}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th
-                                                    colspan="3"
-                                                    class="px-6 py-3"
-                                                >
+                                                <th colspan="3" class="px-6">
                                                     Description
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <td
-                                                    colspan="3"
-                                                    class="px-6 py-4"
-                                                >
+                                                <td colspan="3" class="px-6">
                                                     {{ item.description }}
                                                 </td>
                                             </tr>
@@ -239,6 +215,12 @@ function toggleDetails(index) {
 }
 .detail-table {
     width: 91%;
+}
+.detail-table th {
+    padding-top: 15px;
+}
+.detail-table td {
+    padding-bottom: 15px;
 }
 
 .center-content {
