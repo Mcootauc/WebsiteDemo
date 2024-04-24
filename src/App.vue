@@ -37,11 +37,13 @@
             </div>
             <!-- Bottom Bar for Inputs -->
             <div class="bottom-bar">
-                <input
-                    type="text"
-                    placeholder="Search by work order # or category..."
-                    class="px-3 py-3 border rounded"
-                />
+                <div class="search-input">
+                    <input
+                        type="text"
+                        placeholder="Search by work order # or category..."
+                        class="px-3 py-3 border rounded"
+                    />
+                </div>
                 <div class="three-inputs">
                     <input
                         type="text"

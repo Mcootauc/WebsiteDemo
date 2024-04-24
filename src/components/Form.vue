@@ -10,6 +10,18 @@
             <option value="Other">Other</option>
         </select>
 
+        <label for="subCategory">Sub Category:</label>
+        <select id="subCategory" v-model="subCategory" required>
+            <option disabled value="">Please select one</option>
+            <option
+                v-for="option in availableSubCategories"
+                :key="option"
+                :value="option"
+            >
+                {{ option }}
+            </option>
+        </select>
+
         <label for="status">Status:</label>
         <select id="status" v-model="status" required>
             <option disabled value="">Please select one</option>
@@ -27,18 +39,6 @@
             required
             placeholder="e.g., $5000"
         />
-
-        <label for="subCategory">Sub Category:</label>
-        <select id="subCategory" v-model="subCategory" required>
-            <option disabled value="">Please select one</option>
-            <option
-                v-for="option in availableSubCategories"
-                :key="option"
-                :value="option"
-            >
-                {{ option }}
-            </option>
-        </select>
 
         <label for="location">Location:</label>
         <input
@@ -84,9 +84,9 @@ const emits = defineEmits(['changeView']);
 
 const workOrder = ref('');
 const category = ref('');
+const subCategory = ref('');
 const status = ref('');
 const price = ref('');
-const subCategory = ref('');
 const location = ref('');
 const laborHours = ref('');
 const description = ref('');

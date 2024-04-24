@@ -133,7 +133,7 @@
             <img
                 src="https://st.hzcdn.com/simgs/pictures/exteriors/high-park-currant-interior-design-img~f71130a6024f3947_4-3756-1-6f7b4f3.jpg"
                 alt="Home Image"
-                style="max-width: 100%; height: auto"
+                style="width: 100%; height: auto"
             />
         </div>
     </div>
@@ -234,7 +234,6 @@ function toggleDetails(index) {
 }
 .table-container {
     flex: 1 1 60%;
-    max-width: 60%;
 }
 
 .content-container {
