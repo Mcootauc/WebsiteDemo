@@ -1,184 +1,315 @@
 <template>
-    <div class="grid grid-cols-4 gap-5">
-      <div class="flex-wrap">
-        <form class="max-w-md mx-auto">
-          <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-          <div class="relative">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-              </svg>
+    <div class="app-container">
+        <!-- Header Section -->
+        <div class="top-bar">
+            <div class="house-with-circle-and-square">
+                <div id="square"></div>
+                <div id="house-circle"></div>
+                <div class="house">
+                    <h1 id="house-name">Java</h1>
+                    <h2 id="house-description">Smokey Mountains</h2>
+                </div>
             </div>
-            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
-            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-          </div>
-        </form>
-<!--        a search bar-->
-      </div>
-     <Datepicker
-         range
-         lang="en"
-         v-model="selectedDate"/>
+            <h1 id="view-listing">View Listing</h1>
+            <span class="middle-buttons">
+                <h1>Overview</h1>
+                <h1>Bookings</h1>
+                <h1 id="work-orders">Work Orders</h1>
+            </span>
+            <div class="house-with-circle-and-square">
+                <div id="notification-circle"></div>
+                <div id="user-circle"></div>
+                <div class="right-section">
+                    <button v-if="!user" @click="signIn">Sign In</button>
+                    <div v-else>{{ user.displayName }} &nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <!-- Mid Bar for Buttons -->
+        <div class="bar-background border-b dark:border-gray-700">
+            <div class="mid-bar">
+                <button @click="toggleWriting" id="left-button">
+                    {{ writing ? 'Go to Home' : 'Create Form' }}
+                </button>
+                <button id="right-button" v-if="user" @click="signOutUser">
+                    Sign Out
+                </button>
+            </div>
+            <!-- Bottom Bar for Inputs -->
+            <div class="bottom-bar">
+                <div class="search-input">
+                    <input
+                        type="text"
+                        placeholder="Search by work order # or category..."
+                        class="px-3 py-3 border rounded"
+                    />
+                </div>
+                <div class="three-inputs">
+                    <input
+                        type="text"
+                        placeholder="Created"
+                        class="px-3 py-3 border rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Completed"
+                        class="px-3 py-3 border rounded"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Work Order Status"
+                        class="px-3 py-3 border rounded"
+                    />
+                </div>
+            </div>
+            <h1 class="clear-filters-button">
+                <span id="circle-indicator"></span>
+                Clear all filters
+            </h1>
+        </div>
+        <!-- Main Content: Form or Home Component -->
+        <div v-if="user" class="signed-in">
+            <Form
+                v-if="writing"
+                :writing="writing"
+                @changeView="writing = false"
+            ></Form>
+            <Home v-else />
+        </div>
+        <div v-else class="signed-out">
+            <h1>Please sign in to view the content!</h1>
+        </div>
     </div>
-<!--  range datepicker for user to choose tasks on specific date range/ not yet implement-->
-  <span class="inline-grid grid-cols-2 w-full">
-  <div class="inline-flex relative overflow-x-auto shadow-md sm:rounded-lg left justify-items-stretch">
-    <table class = "size-full table-fixed text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-white-50 dark:bg-white-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="px-6 py-3">ID #</th>
-        <th scope="col" class="px-6 py-3">Category</th>
-        <th scope="col" class="px-6 py-3">Status</th>
-        <th scope="col" class="px-6 py-3">Action</th>
-      </tr>
-      </thead>
-      <tbody class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-             v-for="(item, index) in dataTable" :key="item.id">
-      <td class="px-6 py-4">{{ item.id }}</td>
-          <td class="px-6 py-4">{{ item.workName }}</td>
-          <td class="px-6 py-4">
-            {{ item.status ? "Complete" : "Pending" }}
-          </td>
-          <td class="px-6 py-4">
-            <button
-                @click="toggleDetails(index)"
-                class="text-blue-600 hover:underline flex items-center"
-            >
-              <span v-if="!item.showDetails">▼</span>
-              <span v-else>▲</span>
-            </button>
-          </td>
-        <!-- Additional rows for details, conditionally rendered -->
-        <tr v-if="item.showDetails" class="border-r">
-          <td colspan="4" class="px-6 py-4">
-            <table
-                class="w-full max-h-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-            >
-<!--              a table created inside the dropdown-->
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" class="px-6 py-3">Work Type(s)</th>
-                  <th scope="col" class="px-6 py-3">Dates</th>
-                </tr>
-                <tr class="border-b">
-                  <td class="px-6 py-4">data pull from back-end</td>
-                  <td class="px-6 py-4">data pull from back-end</td>
-                </tr>
-                <tr>
-                <th scope="col" class="px-6 py-3">Location</th>
-                <th scope="col" class="px-6 py-3">Completed On</th>
-                </tr>
-                <tr class="border-b">
-                  <td class="px-6 py-4">data pull from back-end</td>
-                  <td class="px-6 py-4">data pull from back-end</td>
-                </tr>
-                <th scope="col" class="px-6 py-3">Quick Description</th>
-                <tr>
-                <td class="px-6 py-4">data pull from back-end</td>
-                </tr>
-              </thead>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-    <span class="justify-self-center ">
-      <img cover="cover" width="2000" height="363" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png" alt="image description">
-<!--      image got stretch out if the table is too long-->
-    </span>
-  </span>
 </template>
 
-<script>
-import 'vue-datepicker-ui/lib/vuedatepickerui.css';
-import VueDatepickerUi from 'vue-datepicker-ui';
-import 'flowbite';
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import Home from './components/Home.vue';
+import Form from './components/Form.vue';
+import {
+    useAuthentication,
+    useSignIn,
+    useSignOut,
+} from './services/authService.js';
 
-export default {
-  components: {
-    Datepicker: VueDatepickerUi,
-  },
-  data() {
-    return {
-      dataTable: [
-        { id: "#1",
-          workName: "Task 1",
-          status: true,
-          showDetails: false
-        },
-        {
-          id: "#2",
-          workName: "Task 2",
-          status: false,
-          showDetails: false,
-        },
-        { id: "#5",
-          workName: "Task 3",
-          status: true,
-          showDetails: false
-        },
-        { id: "#4",
-          workName: "Task 4",
-          status: true,
-          showDetails: false
-        },{ id: "#1",
-          workName: "Task 1",
-          status: true,
-          showDetails: false
-        },
-        {
-          id: "#2",
-          workName: "Task 2",
-          status: false,
-          showDetails: false,
-        },
-        { id: "#5",
-          workName: "Task 3",
-          status: true,
-          showDetails: false
-        },
-        { id: "#4",
-          workName: "Task 4",
-          status: true,
-          showDetails: false
-        },{ id: "#1",
-          workName: "Task 1",
-          status: true,
-          showDetails: false
-        },
-        {
-          id: "#2",
-          workName: "Task 2",
-          status: false,
-          showDetails: false,
-        },
-        { id: "#5",
-          workName: "Task 3",
-          status: true,
-          showDetails: false
-        },
-        // More items...
-      ],
-      selectedDate: [
-        new Date(),
-        new Date(new Date().getTime() + 9 * 24 * 60 * 60 * 1000)
-      ], //calculate date for calendar
+const writing = ref(false); // ref to toggle between Home and Form components
+const { user, subscribe } = useAuthentication();
+const { signIn } = useSignIn();
+const { signOutUser } = useSignOut();
 
-      selectedProperty: false,} //flag to trigger properties selection
+const toggleWriting = () => {
+    writing.value = !writing.value;
+};
 
-  },
-  methods: {
-    toggleDetails(index) {
-      this.dataTable[index].showDetails = !this.dataTable[index].showDetails;
-    },// get data from the table on-click then show its content
-  },
-}
+let unsubscribe;
+onMounted(() => {
+    unsubscribe = subscribe();
+});
+
+onUnmounted(() => {
+    if (unsubscribe) {
+        unsubscribe();
+    }
+});
 </script>
+
 <style>
-.cover {
-  object-fit: cover;
-  width: 500px;
-  height: 500px;
+.app-container {
+    height: 100vh;
+    min-width: 800px;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: black;
+}
+
+.house-with-circle-and-square {
+    display: flex;
+    align-items: center;
+}
+#square {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    margin-right: 30px;
+    margin-left: 20px;
+}
+#house-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #be9054;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.house {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#house-name {
+    color: white;
+    font-size: 1rem;
+}
+#house-description {
+    color: gray;
+    font-size: 0.85rem;
+}
+
+#view-listing {
+    color: white;
+    background-color: #1b1e27;
+    padding: 0 10px 0 10px;
+}
+
+.middle-buttons {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 0 15px 0 15px;
+}
+#work-orders {
+    position: relative;
+    background-color: transparent;
+    color: #4e87c4;
+    border: none;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+#work-orders::after {
+    content: ''; /* Required for pseudo-elements */
+    position: absolute;
+    bottom: 0; /* Align to the bottom of the button */
+    left: 0; /* Start from the left edge of the button */
+    width: 100%;
+    height: 2px;
+    background-color: #4facfe;
+}
+
+#notification-circle {
+    width: 35px;
+    height: 35px;
+    background-color: #21252c;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+#user-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #2c839c;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.right-section {
+    color: white;
+}
+
+.bar-background {
+    background-color: #f9fafc;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+.mid-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 20px;
+}
+
+.bottom-bar {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px 20px;
+    width: 75%;
+}
+
+.bottom-bar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 0 auto 10px;
+}
+
+.three-inputs {
+    display: flex;
+    padding-left: 8vw;
+    gap: 30px;
+}
+
+#left-button,
+#right-button {
+    font-size: 15px;
+    background-color: rgb(197, 151, 90);
+    color: black;
+    padding: 7px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.clear-filters-button {
+    position: relative;
+    padding: 0;
+    margin-left: 20px;
+    border: none;
+    color: #a9afb1;
+    cursor: pointer;
+    font-size: 16px;
+}
+#circle-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #a9afb1;
+    transition: background-color 0.3s ease;
+}
+
+.signed-in {
+    margin: 0;
+    padding: 0;
+}
+.signed-out {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    width: 100%;
+    margin-top: px;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 800px) {
+    .house-with-circle-and-square {
+        justify-content: start;
+    }
+    .bar-background {
+        padding: 10px 8px;
+    }
+}
+
+@media (min-width: 650px) {
+    .mid-bar,
+    .bottom-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .bottom-bar input {
+        width: auto;
+        flex-grow: 1;
+    }
 }
 </style>
