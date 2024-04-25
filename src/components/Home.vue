@@ -293,7 +293,7 @@ function toggleDetails(index) {
     opacity: 0;
 }
 .fade-leave-active {
-    transition: all 0.7s ease;
+    transition: all 0.1s ease;
 }
 
 .rotate-enter-from {
