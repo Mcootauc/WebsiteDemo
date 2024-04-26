@@ -291,7 +291,6 @@ onUnmounted(() => {
     margin-top: px;
     font-size: 1.5rem;
 }
-
 /* Styling for when the DOM window is smaller */
 @media (min-width: 800px) {
     .house-with-circle-and-square {
