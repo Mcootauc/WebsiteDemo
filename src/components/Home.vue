@@ -5,135 +5,167 @@
     </div>
     <!-- Table Section -->
     <div v-else-if="workOrders.length > 0" class="content-container">
-        <div class="table-container">
-            <table
-                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-            >
-                <thead class="border-b dark:border-gray-700">
-                    <tr>
-                        <td scope="col" class="center-text-title px-6 py-5">
-                            Work Order #
-                        </td>
-                        <td scope="col" class="center-text-title px-6 py-5">
-                            Category
-                        </td>
-                        <td scope="col" class="center-text-title px-6 py-5">
-                            Status
-                        </td>
-                    </tr>
-                </thead>
-                <tbody v-for="(item, index) in workOrders" :key="item.id">
-                    <tr class="primary-cell border-b dark:border-gray-700">
-                        <th class="center-text px-6 py-4">
-                            {{ item.workOrder }}
-                        </th>
-                        <th class="center-text px-6 py-4">
-                            {{ item.category }}
-                        </th>
-                        <td class="center-text px-6 py-4">
-                            <span
-                                :class="{
-                                    'status-completed':
-                                        item.status === 'Completed',
-                                    'status-in-progress':
-                                        item.status === 'In Progress',
-                                }"
-                            >
-                                {{ item.status }}
-                            </span>
-                        </td>
-
-                        <td class="px-2 py-4 center-content">
-                            <button
-                                @click="toggleDetails(index)"
-                                class="button-blue"
-                            >
-                                <span :class="{ 'rotate-up': item.showDetails }"
-                                    ><i class="bi bi-chevron-down"></i
-                                ></span>
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Transition and extra details -->
-                    <transition name="fade">
-                        <tr v-if="item.showDetails" class="border-b">
-                            <td colspan="4">
-                                <div class="detail-table-container">
-                                    <table
-                                        class="detail-table text-sm text-left text-gray-500 dark:text-gray-400"
-                                    >
-                                        <tbody>
-                                            <tr>
-                                                <th scope="col" class="px-6">
-                                                    Date Created
-                                                </th>
-                                                <th scope="col" class="px-6">
-                                                    Price
-                                                </th>
-                                                <th scope="col" class="px-6">
-                                                    Contact
-                                                </th>
-                                            </tr>
-                                        </tbody>
-                                        <tbody>
-                                            <tr>
-                                                <td class="px-6">
-                                                    {{ item.dateCreated }}
-                                                </td>
-                                                <td class="px-6">
-                                                    ${{ item.price }}
-                                                </td>
-                                                <td class="px-6">
-                                                    123-456-7890
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="col" class="px-6">
-                                                    Sub Category
-                                                </th>
-                                                <th scope="col" class="px-6">
-                                                    Location
-                                                </th>
-                                                <th scope="col" class="px-6">
-                                                    Labor Time
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td class="px-6">
-                                                    {{ item.subCategory }}
-                                                </td>
-                                                <td class="px-6">
-                                                    {{ item.location }}
-                                                </td>
-                                                <td class="px-6">
-                                                    {{ item.laborHours }}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="3" class="px-6">
-                                                    Description
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" class="px-6">
-                                                    {{ item.description }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+        <div class="table-and-image-container">
+            <div class="table-container">
+                <table
+                    class="table w-full text-sm text-left text-gray-500 dark:text-gray-400 table-with-extend"
+                >
+                    <thead class="border-b dark:border-gray-700">
+                        <tr>
+                            <td scope="col" class="center-text-title px-6 py-5">
+                                Work Order #
+                            </td>
+                            <td scope="col" class="center-text-title px-6 py-5">
+                                Category
+                            </td>
+                            <td scope="col" class="center-text-title px-6 py-5">
+                                Date Created
+                            </td>
+                            <td scope="col" class="center-text-title px-6 py-5">
+                                Status
                             </td>
                         </tr>
-                    </transition>
-                </tbody>
-            </table>
-        </div>
-        <!-- Image Section -->
-        <div>
+                    </thead>
+                    <tbody v-for="(item, index) in workOrders" :key="item.id">
+                        <tr class="primary-cell border-b dark:border-gray-700">
+                            <th class="center-text px-6 py-4">
+                                {{ item.workOrder }}
+                            </th>
+                            <th class="center-text px-6 py-4">
+                                {{ item.category }}
+                            </th>
+                            <th class="center-text px-6 py-4">
+                                {{ item.dateCreated }}
+                            </th>
+                            <td class="center-text px-6 py-4">
+                                <span
+                                    :class="{
+                                        'status-completed':
+                                            item.status === 'Completed',
+                                        'status-in-progress':
+                                            item.status === 'In Progress',
+                                    }"
+                                >
+                                    {{ item.status }}
+                                </span>
+                            </td>
+
+                            <td class="px-2 py-4 center-content">
+                                <button
+                                    @click="toggleDetails(index)"
+                                    class="button-blue"
+                                >
+                                    <span
+                                        :class="{
+                                            'rotate-up': item.showDetails,
+                                        }"
+                                        ><i class="bi bi-chevron-down"></i
+                                    ></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Transition and extra details -->
+                        <transition name="fade">
+                            <tr v-if="item.showDetails" class="border-b">
+                                <td colspan="4">
+                                    <div class="detail-table-container">
+                                        <table
+                                            class="detail-table text-sm text-left text-gray-500 dark:text-gray-400"
+                                        >
+                                            <tbody>
+                                                <tr>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Price
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Sub Category
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Contact
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Location
+                                                    </th>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="px-6">
+                                                        ${{ item.price }}
+                                                    </td>
+                                                    <td class="px-6">
+                                                        {{ item.subCategory }}
+                                                    </td>
+                                                    <td class="px-6">
+                                                        123-456-7890
+                                                    </td>
+                                                    <td class="px-6">
+                                                        {{ item.location }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Date Ended
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        class="px-6"
+                                                    >
+                                                        Labor Time
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-6">
+                                                        {{ item.dateCreated }}
+                                                    </td>
+                                                    <td class="px-6">
+                                                        {{ item.laborHours }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th
+                                                        colspan="3"
+                                                        class="px-6"
+                                                    >
+                                                        Description
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <td
+                                                        colspan="3"
+                                                        class="px-6"
+                                                    >
+                                                        {{ item.description }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </transition>
+                    </tbody>
+                </table>
+            </div>
             <img
-                src="https://st.hzcdn.com/simgs/pictures/exteriors/high-park-currant-interior-design-img~f71130a6024f3947_4-3756-1-6f7b4f3.jpg"
+                src="../../img/blur-img.png"
                 alt="Home Image"
-                style="width: 100%; height: auto"
+                class="background-image"
             />
         </div>
     </div>
@@ -144,7 +176,6 @@
 </template>
 
 <script setup>
-import 'vue-datepicker-ui/lib/vuedatepickerui.css';
 import 'flowbite';
 import { ref, onMounted } from 'vue';
 import { fetchWorkOrders } from '../services/workOrderService';
@@ -199,13 +230,13 @@ function toggleDetails(index) {
     font-size: large;
 }
 
-.table-container table tbody:nth-child(odd) > .primary-cell {
+.table-and-image-container table tbody:nth-child(odd) > .primary-cell {
     background-color: #f9fafc; /* Light gray for odd rows */
 }
-
-.table-container table tbody:nth-child(even) > .primary-cell {
+.table-and-image-container table tbody:nth-child(even) > .primary-cell {
     background-color: #ffffff; /* White for even rows */
 }
+
 .detail-table-container {
     padding-left: 40px;
     margin: 0;
@@ -229,11 +260,36 @@ function toggleDetails(index) {
     align-items: center;
 }
 
+.table-and-image-container {
+    position: relative;
+    width: 100%; /* Use 100% width of its parent */
+    max-height: 100vh; /* Limit container height to viewport height */
+}
 .table-container .center-text {
     text-align: center;
 }
 .table-container {
-    flex: 1 1 60%;
+    position: relative;
+    width: 80%;
+    margin: auto;
+}
+.table {
+    overflow-y: auto;
+    position: relative;
+    z-index: 1; /* Higher z-index so the table is above the image */
+    width: 80%;
+    margin: auto;
+    background-color: white;
+    border: 1px solid #eaebee;
+}
+
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
 }
 
 .content-container {
@@ -241,12 +297,6 @@ function toggleDetails(index) {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: nowrap;
-}
-
-.image-container {
-    flex: 1 1 40%;
-    max-width: 40%;
-    display: flex;
 }
 
 .status-completed,
@@ -266,7 +316,6 @@ function toggleDetails(index) {
     border: 1px solid #eab308;
 }
 
-/* Styling for detail rows */
 .detail-row {
     background-color: #f3f3f3;
     color: #333;

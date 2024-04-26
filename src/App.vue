@@ -246,7 +246,7 @@ onUnmounted(() => {
 .three-inputs {
     display: flex;
     padding-left: 8vw;
-    gap: 30px;
+    gap: 50px;
 }
 
 #left-button,
@@ -257,6 +257,7 @@ onUnmounted(() => {
     padding: 7px 15px;
     border-radius: 20px;
     cursor: pointer;
+    box-shadow: 0px 3px 10px 3px rgb(135, 124, 124);
 }
 
 .clear-filters-button {
