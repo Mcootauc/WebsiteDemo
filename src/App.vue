@@ -29,7 +29,7 @@
         <div class="bar-background border-b dark:border-gray-700">
             <div class="mid-bar">
                 <button @click="toggleWriting" id="left-button">
-                    {{ writing ? 'Go to Home' : 'Create Form' }}
+                    {{ writing ? 'Go Home' : 'Create Form' }}
                 </button>
                 <button id="right-button" v-if="user" @click="signOutUser">
                     Sign Out
