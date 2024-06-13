@@ -25,8 +25,9 @@
                 </div>
             </div>
         </div>
-        <!-- Mid Bar for Buttons -->
+        <!-- Buttons and Inputs -->
         <div class="bar-background border-b dark:border-gray-700">
+            <!-- Mid Bar for Buttons -->
             <div class="mid-bar">
                 <button @click="toggleWriting" id="left-button">
                     {{ writing ? 'Go Home' : 'Create Form' }}
@@ -291,7 +292,7 @@ onUnmounted(() => {
     margin-top: px;
     font-size: 1.5rem;
 }
-
+/* Styling for when the DOM window is smaller */
 @media (min-width: 800px) {
     .house-with-circle-and-square {
         justify-content: start;
